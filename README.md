@@ -12,17 +12,18 @@ Stažení a nainstalace ze [Steamu](https://store.steampowered.com/app/813780/Ag
 Jak se nyní dozvíte, tak naše AI není "Artificial Intelligence", ale "Accumulated IFs". Všechny AI v Age of Empires 2 jsou napsané v jazyce [LISP](https://cs.wikipedia.org/wiki/Lisp). LISP je velmi starý jazyk, který byl vytvořen v roce 1958. 
 
 ### jak definovat pavidlo (IFs)
+Základem je podmíněné vykonávání příkazů IF -> THEN.
 
 ``` LISP
 (defrule       ;Toto začíná pravidlo. Defrule je zkratka pro "definovat pravidlo".
-    (fact 1)   ;Toto je "if" část pravidla. AI zkontroluje, zda jsou tyto fakty
-    (fact 2)   ;pravdivé. Pokud jsou všechny fakty pravdivé, pokračuje AI na
+    (fact 1)   ;Toto je "if" část pravidla. AI zkontroluje, zda jsou tato fakta
+    (fact 2)   ;pravdivá. Pokud jsou všechny fakty pravdivé, pokračuje AI na
     (fact 3)   ;akce. Ne všechna pravidla mají 3 fakty, ale všechna mají alespoň jeden.
     ...
     =>         ;Toto je "then" část pravidla.
     (action 1)
     (action 2) ;Pokud jsou všechny fakty pravdivé, dojde k těmto akcím. Ne všechna 
-    (action 3) ;pravidla mají tři akce, ale všechna mají alespoň jeden.
+    (action 3) ;pravidla mají tři akce, ale všechna mají alespoň jednu.
     ...
 ) ;tato závorka ukončuje pravidlo.
 ```
@@ -32,7 +33,7 @@ Jak se nyní dozvíte, tak naše AI není "Artificial Intelligence", ale "Accumu
 
 Nyní jste pravděpodobně netrpěliví, abyste své pravidlo chování otestovali. Nejprve musíte svou AI uložit. Po té co jste pro ní vybrali jméno, uložte soubor s příponu `.per`. Všechny AI jsou uloženy ve složce AI. Přejděte do adresáře `My Computer/Local Disk (C)/Program Files/Microsoft Games/Age of Empires II/AI/` a do této složky uložte svou AI. 
 
-Dále vytvořte nový dokument a tento prázdný dokument s tím samým názvem jako vaše AI, ale s příponou `.ai` místo přípony `.per`.
+Dále vytvořte nový prázdný dokument a ten pojmenujte stejným názvem jako vaši AI, ale s příponou `.ai` místo `.per`.
 
 Tedy názvy vašich dvou souborů mohou být:
 
@@ -41,8 +42,11 @@ Tedy názvy vašich dvou souborů mohou být:
 
 Soubor `.per` obsahuje veškerý kód, který hra čte. Hra však potřebuje soubor `.ai`, aby mohla otevřít soubor AI. Takže každý soubor AI, který vytvoříte, bude potřebovat dva soubory, jeden s příponou `.per` a jeden s příponou `.ai`.
 
-Nyní, abyste viděli svou AI v akci, otevřete Age of Empires a připravte se na spuštění náhodné mapové hry. Chcete-li svou AI hrát v náhodné mapové hře, klikněte na šipku vlevo od vašeho hráčského souboru a vyberte název vaší AI.
+Nyní, abyste viděli svou AI v akci, otevřete Age of Empires a připravte se na spuštění náhodné mapové hry. Chcete-li se svou AI hrát v náhodné hře, klikněte na šipku vlevo od vašeho hráčského souboru a vyberte název zvolené AI.
 
+### Demo
+- [basic.ai](./src/basic.ai)
+- [basic.per](./src/basic.per)
 
 ## Zdroje:
 - [Creating simple AI scripts for your custom campaigns](https://forums.ageofempires.com/t/creating-simple-ai-scripts-for-your-custom-campaigns/210881)

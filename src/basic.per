@@ -1,0 +1,141 @@
+;ATTACKING ========================================
+
+(defrule
+    (military-population >= 10) ;when we have 10 military, attack!
+=>
+    (attack-now)
+)
+
+;STRATEGIC NUMBERS ========================================
+
+(defrule ;initial numbers
+    (true)
+=>
+    (set-strategic-number sn-percent-civilian-explorers 0) ;don't scout with villagers
+    (set-strategic-number sn-total-number-explorers 1) ;scout with our scout!
+    (set-strategic-number sn-number-explore-groups 1)
+    (set-strategic-number sn-enable-boar-hunting 1) ;take the boar!
+    (disable-self)
+)
+
+(defrule
+    (current-age == dark-age)
+=>
+    (set-strategic-number sn-food-gatherer-percentage 80)
+    (set-strategic-number sn-wood-gatherer-percentage 20)
+    (set-strategic-number sn-gold-gatherer-percentage 0)
+    (set-strategic-number sn-stone-gatherer-percentage 0)
+    (disable-self)
+)
+
+(defrule
+    (current-age == feudal-age)
+=>
+    (set-strategic-number sn-food-gatherer-percentage 50)
+    (set-strategic-number sn-wood-gatherer-percentage 35)
+    (set-strategic-number sn-gold-gatherer-percentage 15)
+    (set-strategic-number sn-stone-gatherer-percentage 0)
+    (disable-self)
+)
+
+;RESEARCH ========================================
+;Notice that this section is above units, this is so we can research stuff before we queue stuff.
+
+(defrule
+    (can-research ri-loom)
+=>
+    (research ri-loom)
+)
+
+(defrule
+    (can-research ri-fletching)
+=>
+    (research ri-fletching)
+)
+
+(defrule
+    (civilian-population >= 21)
+    (can-research feudal-age)
+=>
+    (research feudal-age)
+)
+
+;UNITS ========================================
+
+(defrule
+    (civilian-population < 130) ;if we have less than 130 villagers, train a villager.
+    (can-train villager)
+=>
+    (train villager)
+)
+
+(defrule
+    (can-train archer-line)
+=>
+    (train archer-line)
+)
+
+;BUILDINGS ========================================
+
+(defrule ;we need houses!
+    (housing-headroom < 5) ;if we are nearly housed
+    (population-headroom != 0) ;if we are not population blocked
+    (can-build house)
+=>
+    (build house)
+)
+
+(defrule ;lumber camps
+    (resource-found wood) ;if we have scouted wood
+    (dropsite-min-distance wood > 3) ;if the closest tree is more than 3 tiles away from a dropoff point
+    (can-build lumber-camp)
+=>
+    (build lumber-camp)
+)
+
+(defrule ;mills
+    (resource-found food)
+    (dropsite-min-distance food > 3)
+    (can-build mill)
+=>
+    (build mill)
+)
+
+(defrule ;farms
+    (building-type-count-total farm < 6)
+    (can-build farm)
+=>
+    (build farm)
+)
+
+(defrule ;mining camps
+    (current-age >= feudal-age)
+    (resource-found gold) ;if we have scouted gold
+    (dropsite-min-distance gold > 3) ;if the closest gold pile is more than 3 tiles away from a dropoff point
+    (can-build mining-camp)
+=>
+    (build mining-camp)
+)
+
+(defrule
+    (building-type-count-total blacksmith == 0) ;if no blacksmith, build a blacksmith.
+    (can-build blacksmith)
+=>
+    (build blacksmith)
+)
+
+(defrule
+    (current-age >= feudal-age) ; >= is greater than or equal to, so do this in the castle age as well.
+    (building-type-count-total barracks == 0)
+    (can-build barracks)
+=>
+    (build barracks)
+)
+
+(defrule
+    (current-age >= feudal-age)
+    (building-type-count-total archery-range < 2) ;construct two archery ranges.
+    (can-build archery-range)
+=>
+    (build archery-range)
+)
