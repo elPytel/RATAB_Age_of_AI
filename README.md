@@ -11,7 +11,7 @@ Stažení a nainstalace ze [Steamu](https://store.steampowered.com/app/813780/Ag
 
 Jak se nyní dozvíte, tak naše AI není "Artificial Intelligence", ale "Accumulated IFs". Všechny AI v Age of Empires 2 jsou napsané v jazyce [LISP](https://cs.wikipedia.org/wiki/Lisp). LISP je velmi starý jazyk, který byl vytvořen v roce 1958. 
 
-### jak definovat pavidlo (IFs)
+### Jak definovat pavidlo (IFs)
 
 Základem je podmíněné vykonávání příkazů IF -> THEN.
 
@@ -32,7 +32,7 @@ Základem je podmíněné vykonávání příkazů IF -> THEN.
 Povšimněte si, že všechny odsazení jsou zcela volitelná. Byly zahrnuty pouze proto, aby bylo každé pravidlo snazší číst.
 
 #### Jednorázové akce
-Pokud chce pravidlo psouštět pouze jednou (disable-self action). Například při jednorázovém nastavení proměnné.
+Pokud chceme pravidlo pouštět pouze jednou (disable-self action). Například při jednorázovém nastavení proměnné.
 
 ``` LISP
 (defrule 
@@ -66,9 +66,9 @@ Akce typu Goal se definuje následovně:
 (set-goal GOAL_NUMBER VALUE)
 ```
 
-Nejsme však blázni aby jsme číslům přiřaozovali další hodnoty. Člověk zde na to může nahlížet jako na pole, kde `GOAL_NUMBER` je index a `VALUE` je hodnota na daném indexu. 
+Nejsme však blázni abychom číslům přiřazovali další hodnoty. Člověk zde na to může nahlížet jako na pole, kde `GOAL_NUMBER` je index a `VALUE` je hodnota na daném indexu. 
 
-Pro snadnější práci by jsme v jazycích typu C použili kontrukci zvanou jako výčet (enumarate), zde nic takového sice není, ale můžeme to napodobit pomocí `defconst`, kdy jednotlivým konstantám přiřadíme čísla ručně.
+Pro snadnější práci bychom v jazycích typu C použili kontrukci zvanou jako výčet (enumarate), zde nic takového sice není, ale můžeme to napodobit pomocí `defconst`, kdy jednotlivým konstantám přiřadíme čísla ručně.
 
 ![My head hurts](assets/My-head-hurts.gif)
 
@@ -140,9 +140,9 @@ Výrazy mohou být také porovnávány pomocí následujících operátorů:
 
 - `>` (greater than) větší než
 - `<` (less than) menší než
-- `>=` greater than or equal to
-- `<=` less than of equal to
-- `==` equal to
+- `>=` (greater than or equal to) větší nebo rovno než
+- `<=` (less than of equal to) menší nebo rovno než
+- `==` (equal to) rovno než
 
 Příklad:
 
@@ -156,7 +156,7 @@ Příklad:
 ```
 
 ### Micro management (Strategic Numbers)
-Straegic number říkají AI, jak se chovat na nejzákladnější úrovni. Jsou převážně používány k přidělování vesničanů k různým zdrojům:
+Strategic number říkají AI, jak se chovat na nejzákladnější úrovni. Jsou převážně používány k přidělování vesničanů k různým zdrojům:
 
 ``` LISP
 (defrule
@@ -209,7 +209,7 @@ Můžeme zkontrolovat, kolik budov každého typu máme pomocí této podmínky:
 Všimněte si, že rozdíl mezi počtem budov a celkovým počtem budov je v tom, že ten druhý zahrnuje budovy ve frontě pro stavbu. (stejně to je i pro počty jednotek)
 
 #### Domečky
-Domečky nám umožnují vyrábět další vesničany. Pro kotrolu, zda jsme méně než 5 jednotek od stavu, kdy nemáme dostatek domů:
+Domečky nám umožnují vytvářet další vesničany. Pro kotrolu, zda jsme méně než 5 jednotek od stavu, kdy nemáme dostatek domů:
 
 ``` LISP
 (housing-headroom < 5)
@@ -262,7 +262,7 @@ Zde je příklad pro tábor na dřevo, který by měl věci ujasnit:
 )
 ```
 
-Ai nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly, což nechceme. Jednoduchým řešením, které rád používám, je upravit `sn-camp-max-distance`, kdykoli postavím tábor.
+AI nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly, což nechceme. Jednoduchým řešením, které rád používám, je upravit `sn-camp-max-distance`, kdykoli postavím tábor.
 
 
 ### Boj
