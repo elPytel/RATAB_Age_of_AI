@@ -134,7 +134,79 @@ Pro návrh složitějších pravidel lze jednotlivé výrazy spojovat pomocí bo
 )
 ```
 
-### Stavění
+#### Porovnávání ve výrazech
+
+Výrazy mohou být také porovnávány pomocí následujících operátorů:
+
+- `>` (greater than) větší než
+- `<` (less than) menší než
+- `>=` greater than or equal to
+- `<=` less than of equal to
+- `==` equal to
+
+Příklad:
+
+``` LISP
+(defrule
+    (unit-type-count villager > 0)
+=>
+    (chat-to-all "I just made my first villager!")
+    (disable-self)
+)
+```
+
+### Micro management (Strategic Numbers)
+Straegic number říkají AI, jak se chovat na nejzákladnější úrovni. Jsou převážně používány k přidělování vesničanů k různým zdrojům:
+
+``` LISP
+(defrule
+    (current-age == dark-age)
+=>
+    (set-strategic-number sn-food-gatherer-percentage 85)
+    (set-strategic-number sn-wood-gatherer-percentage 15)
+    (set-strategic-number sn-gold-gatherer-percentage 0)
+    (set-strategic-number sn-stone-gatherer-percentage 0)
+    (disable-self)
+)
+```
+
+Význam tohoto pravidla je: "Pokud je aktuální věk temný věk, pak přiřaďte 85% vesničanů k jídlu a 15% k dřevu. Udělejte to pouze jednou."
+
+``` LISP
+
+### Stavění budov
+
+Pro postavení jakékoliv budovy můžeme použít podmínku:
+
+``` LISP
+(can-build BUILDING)
+```
+
+A následně akci:
+
+``` LISP
+(build BUILDING)
+```
+
+Například, pro postavení hradu můžeme použít:
+
+``` LISP
+(defrule
+    (can-build castle)
+=>
+    (build castle)
+)
+```
+
+Je také důležité poznamenat, že můžeme budovu postavit dopředu směrem k nepříteli pomocí příkazu `build-forward` místo pouhého `build`.
+
+Můžeme zkontrolovat, kolik budov každého typu máme pomocí této podmínky:
+
+``` LISP
+(building-type-count-total BUILDING > NUMBER)
+```
+
+Všimněte si, že rozdíl mezi počtem budov a celkovým počtem budov je v tom, že ten druhý zahrnuje budovy ve frontě pro stavbu. (stejně to je i pro počty jednotek)
 
 #### Domečky
 Domečky nám umožnují vyrábět další vesničany. Pro kotrolu, zda jsme méně než 5 jednotek od stavu, kdy nemáme dostatek domů:
@@ -149,8 +221,6 @@ Následující příkaz nám umožní zkontrolovat zda máme dostatek domů na t
 (population-headroom != 0)
 ```
 
-
-
 Výsledný kód může vypadat takto:
 
 ``` LISP
@@ -163,13 +233,130 @@ Výsledný kód může vypadat takto:
 )
 ```
 
+#### Skladiště (Dropoff points)
+
+Kempy se staví stejně jako jakákoliv jiná budova, ale stejně jako domy, chceme je stavět pouze tehdy, když jsou splněny určité podmínky. Tato podmínka je užitečná:
+
+``` LISP
+(dropsite-min-distance RESOURCE > NUMBER_TILES)
+```
+
+Toto zkontroluje, zda je nejbližší `RESOURCE` (surovina) vzdálena více než `NUMBER_TILES` (počet kroků) od bodu dropoff. Další užitečnou podmínkou je:
+
+``` LISP
+(resource-found RESOURCE)
+```
+
+To ověří, zda AI prozkoumala konkrétní zdroj. Nechceme stavět body dropoff pro zdroj, který neexistuje!
+
+Zde je příklad pro tábor na dřevo, který by měl věci ujasnit:
+
+``` LISP
+(defrule
+    (dropsite-min-distance wood > 3)
+    (resource-found wood)
+    (can-build lumber-camp)
+=>
+    (build lumber-camp)
+    (up-modify-sn sn-camp-max-distance c:+ 3)
+)
+```
+
+Ai nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly, což nechceme. Jednoduchým řešením, které rád používám, je upravit `sn-camp-max-distance`, kdykoli postavím tábor.
+
+
 ### Boj
 
 
+#### Jednotky a výzkum (Units + Researching)
+Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research RESEARCH`) a (`research RESEARCH`). Příklad:
 
+``` LISP
+(defrule
+    (can-research ri-ballistics)
+=>
+    (research ri-ballistics)
+)
+```
 
-předklad:
+Tenhle příklad bude však vyžadovat budovu univerzity.
 
+#### Vzorové kódu pro armádu
+- Příklad verbování armády podle obtížnosti [zde](./src/army_training.per).
+- Příklad útoku na nepřítele s časováním [zde](./src/attack.per).
+  - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
+
+### Náhodné číslo
+Pokud chceme vložit do našit návrhů trochu nahodilosti a nepředvídatelnosti, tak můžeme využít náhodná čísla. Náhodná čísla můžeme generovat pomocí akce `generate-random-number`:
+
+``` LISP
+(defconst gl-randnum 1)
+
+(defrule 
+	(true)
+=> 
+	(generate-random-number 100)
+	(up-get-fact random-number 0 gl-randnum)
+	(up-chat-data-to-all "gl-randnum %d" g: gl-randnum)
+	(disable-self)
+)
+
+(defrule 
+	(up-compare-goal gl-randnum > 50)
+=> 
+	(chat-to-all "Random number is greater than 50")
+	(disable-self)
+)
+
+(defrule 
+	(up-compare-goal gl-randnum < 51)
+=> 
+	(chat-to-all "Random number is less than 51")
+	(disable-self)
+)
+```
+
+### Časovače (Timers)
+Pokud chceme provést sadu akcí po určité době, můžeme použít časovače. Časovač nastavíme pomocí akce `enable-timer`:
+
+``` LISP
+(enable-timer TIMER_NUMBER SECONDS)
+```
+
+Pro zrušení časovače můžeme použít akci `disable-timer`:
+
+``` LISP
+(disable-timer TIMER_NUMBER)
+```
+
+Toto spustí časovač `TIMER_NUMBER`, který bude odpočítávat `SECONDS` v sekundách. Můžeme zkontrolovat, zda časovač skončil pomocí podmínky `timer-triggered`:
+
+``` LISP
+(timer-triggered TIMER_NUMBER)
+```
+
+Pokud chceme, aby AI něco prohlásila přesně po 30 sekundách, můžeme to snadno provést kombinací všech výše uvedených příkazů: 
+
+``` LISP
+(defconst timer-shout 1) ; Toto je cislo casovace
+
+(defrule ; Pro spusteni casovace
+    (true)
+=>
+    (enable-timer timer-shout 30)
+    (disable-self)
+)
+
+(defrule
+    (timer-triggered timer-shout)
+=>
+    (chat-to-all "GRRR!")
+    (disable-timer timer-shout)
+    (enable-timer timer-shout 30)
+)
+```
+
+Když chceme, aby naše AI komunikovala každých 30 sekund, můžeme náš příkaz `disable-timer` následovat příkazem `enable-timer` přímo poté.
 
 
 ### Přidání AI scriptu do hry
@@ -184,7 +371,7 @@ Tedy názvy vašich dvou souborů mohou být:
 - `Moje_AI.per`
 - `Moje_AI.ai`
 
-Soubor `.per` obsahuje veškerý kód, který hra čte. Hra však potřebuje soubor `.ai`, aby mohla otevřít soubor AI. Takže každý soubor AI, který vytvoříte, bude potřebovat dva soubory, jeden s příponou `.per` a jeden s příponou `.ai`.
+Soubor `.per` (personality) obsahuje veškerý kód, který hra čte. Hra však potřebuje soubor `.ai`, aby mohla otevřít soubor AI. Takže každý soubor AI, který vytvoříte, bude potřebovat dva soubory, jeden s příponou `.per` a jeden s příponou `.ai`.
 
 Nyní, abyste viděli svou AI v akci, otevřete Age of Empires a připravte se na spuštění náhodné mapové hry. Chcete-li se svou AI hrát v náhodné hře, klikněte na šipku vlevo od vašeho hráčského souboru a vyberte název zvolené AI.
 
@@ -193,6 +380,17 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 
 - [basic.ai](./src/basic.ai)
 - [basic.per](./src/basic.per)
+
+### Nahrání dílčích personalit
+Můžete načíst soubory osobnosti z dalších souborů. To však nejde použít v pravidlech.
+``` LISP
+(load "persons\darkage")
+```
+(Toto předpokládá, že existuje soubor s názvem *darkage.per* ve složce s názvem *persons*)
+
+## Co teď?
+
+- rozšíření scriptů o aritmetiku [zde](https://airef.github.io/parameters/parameters-details.html#mathOp).
 
 ## Zdroje:
 - [Creating simple AI scripts for your custom campaigns](https://forums.ageofempires.com/t/creating-simple-ai-scripts-for-your-custom-campaigns/210881)

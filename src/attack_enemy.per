@@ -1,0 +1,44 @@
+(defconst gl-attack-time-range 6)
+(defconst gl-attack-interval 7)
+(defconst gl-game-time 8)
+
+(defrule
+	(true)
+=>
+	(set-strategic-number sn-number-explore-groups 1)
+	(set-strategic-number sn-relic-return-distance 0)
+	(set-strategic-number sn-wall-targeting-mode 1)
+	(set-goal gl-attack-interval 20)
+	(disable-self)
+)
+
+;attack groups
+(defrule	
+	(true)
+=>
+	(set-strategic-number sn-number-attack-groups 0)
+	(enable-timer 1 0)
+	(disable-self)
+)
+
+(defrule
+	(timer-triggered 1)
+=>
+	(disable-timer 1)
+	(set-strategic-number sn-number-attack-groups 0)
+	(up-get-fact game-time 0 gl-game-time)
+	(generate-random-number 20)
+	(up-get-fact random-number 0 gl-attack-time-range)
+	(up-modify-goal gl-attack-interval g:+ gl-attack-time-range)
+	(up-set-timer c: 2 g: gl-attack-interval)
+	(set-goal gl-attack-interval 20)
+)
+
+(defrule
+	(timer-triggered 2)
+=>
+	(set-strategic-number sn-number-attack-groups 200)
+	(up-get-fact game-time 0 gl-game-time)
+	(disable-timer 2)	
+	(enable-timer 1 20)
+)

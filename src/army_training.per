@@ -1,0 +1,51 @@
+;CONST DEF ========================================
+(defconst gl-knight-count 1)
+(defconst gl-villager-count 2)
+(defconst gl-ram-count 3)
+
+;GOAL DEF =========================================
+(defrule
+	(difficulty > moderate)
+=>
+	(set-goal gl-knight-count 10)
+	(set-goal gl-villager-count 10)
+	(set-goal gl-ram-count 2)
+)
+
+(defrule
+	(difficulty == moderate)
+=>
+	(set-goal gl-knight-count 20)
+	(set-goal gl-villager-count 20)
+	(set-goal gl-ram-count 4)
+)
+
+(defrule
+	(difficulty < moderate)
+=>
+	(set-goal gl-knight-count 30)
+	(set-goal gl-villager-count 30)
+	(set-goal gl-ram-count 6)
+)
+
+;Training Units ===================================
+(defrule
+	(unit-type-count-total knight-line g:< gl-knight-count)
+	(can-train knight-line)
+=>
+	(train knight-line)
+)
+
+(defrule
+	(unit-type-count-total villager g:< gl-villager-count)
+	(can-train villager)
+=>
+	(train villager)
+)
+
+(defrule
+	(unit-type-count-total battering-ram-line g:< gl-ram-count)
+	(can-train battering-ram-line)
+=>
+	(train battering-ram-line)
+)
