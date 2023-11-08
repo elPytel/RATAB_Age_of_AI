@@ -13,7 +13,7 @@ Jak se nyní dozvíte, tak naše AI není "Artificial Intelligence", ale "Accumu
 
 ### jak definovat pavidlo (IFs)
 
-Základem je podmíněné vykonávání příkazů IF -> THEN.
+Základem je podmíněné vykonávání příkazů IF -> THEN. To pro nás bude $Alfa$ a $Omega$ celého scriptování. Je důležité pochopit následůjící část kódu, protže od teň na ní budeme pořád stavět. 
 
 ``` LISP
 (defrule       ;Toto začíná pravidlo. Defrule je zkratka pro "definovat pravidlo".
@@ -28,6 +28,8 @@ Základem je podmíněné vykonávání příkazů IF -> THEN.
     ...
 ) ;tato závorka ukončuje pravidlo.
 ```
+
+![My head hurts](assets/My-head-hurts.gif)
 
 Povšimněte si, že všechny odsazení jsou zcela volitelná. Byly zahrnuty pouze proto, aby bylo každé pravidlo snazší číst.
 
@@ -66,11 +68,11 @@ Akce typu Goal se definuje následovně:
 (set-goal GOAL_NUMBER VALUE)
 ```
 
-Nejsme však blázni aby jsme číslům přiřaozovali další hodnoty. Člověk zde na to může nahlížet jako na pole, kde `GOAL_NUMBER` je index a `VALUE` je hodnota na daném indexu. 
+Nejsme však blázni aby jsme číslům přiřazovali další hodnoty. Člověk zde na to může nahlížet jako na pole, kde `GOAL_NUMBER` je index a `VALUE` je hodnota na daném indexu. 
 
 Pro snadnější práci by jsme v jazycích typu C použili kontrukci zvanou jako výčet (enumarate), zde nic takového sice není, ale můžeme to napodobit pomocí `defconst`, kdy jednotlivým konstantám přiřadíme čísla ručně.
 
-![My head hurts](assets/My-head-hurts.gif)
+![Confusion](assets/confusion.jpeg)
 
 ``` LISP
 (defconst gl-train-militia 1) ; Nastavi goal gl-train-militia na 1
@@ -156,7 +158,7 @@ Příklad:
 ```
 
 ### Micro management (Strategic Numbers)
-Straegic number říkají AI, jak se chovat na nejzákladnější úrovni. Jsou převážně používány k přidělování vesničanů k různým zdrojům:
+Straegic numbers říkají AI, jak se chovat na nejzákladnější úrovni. Jsou převážně používány k přidělování vesničanů k různým zdrojům:
 
 ``` LISP
 (defrule
@@ -171,8 +173,6 @@ Straegic number říkají AI, jak se chovat na nejzákladnější úrovni. Jsou 
 ```
 
 Význam tohoto pravidla je: "Pokud je aktuální věk temný věk, pak přiřaďte 85% vesničanů k jídlu a 15% k dřevu. Udělejte to pouze jednou."
-
-``` LISP
 
 ### Stavění budov
 
@@ -266,7 +266,13 @@ Ai nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly
 
 
 ### Boj
+Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které jednotky:
 
+| jednotka | kasárna | technologie |
+| --- | --- | --- |
+`archer-line`       | `archery-range`  |
+`militiaman-line`   | `barracks`  |
+`knight-line`       | `stable`|
 
 #### Jednotky a výzkum (Units + Researching)
 Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research RESEARCH`) a (`research RESEARCH`). Příklad:
