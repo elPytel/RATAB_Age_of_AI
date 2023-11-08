@@ -16,8 +16,8 @@ age | Name |	Wiki
 
 age | tech | web | description
 ----|------|--------------------|------------
-1    |`ri-loom`|	[Looming](https://ageofempires.fandom.com/wiki/Looming) |	Villagers +15 HP
-1    |`ri-feudal-age`|	[Feudal Age](https://ageofempires.fandom.com/wiki/Feudal_Age_(Age_of_Empires_II)) |	Advance to the Feudal Age
+1   |`ri-loom`|	[Looming](https://ageofempires.fandom.com/wiki/Looming) |	Villagers +15 HP
+1   |`ri-feudal-age`|	[Feudal Age](https://ageofempires.fandom.com/wiki/Feudal_Age_(Age_of_Empires_II)) |	Advance to the Feudal Age
 
 ### Věk II: Feudal Age
 
@@ -25,9 +25,9 @@ age | tech | web | description
 
 age | tech | web | description
 ----|------|--------------------|------------
-2    |`ri-castle-age`|	[Castle Age](https://ageofempires.fandom.com/wiki/Castle_Age_(Age_of_Empires_II)) |	Advance to the Castle Age
-2    |`ri-town-watch`|	[Town Watch](https://ageofempires.fandom.com/wiki/Town_Watch) |	Town Centers +5 line of sight
-2    |`ri-wheel-barrow`|	[Wheelbarrow](https://ageofempires.fandom.com/wiki/Wheelbarrow) |	Villagers work 10% faster
+2   |`ri-castle-age`|	[Castle Age](https://ageofempires.fandom.com/wiki/Castle_Age_(Age_of_Empires_II)) |	Advance to the Castle Age
+2   |`ri-town-watch`|	[Town Watch](https://ageofempires.fandom.com/wiki/Town_Watch) |	Town Centers +5 line of sight
+2   |`ri-wheel-barrow`|	[Wheelbarrow](https://ageofempires.fandom.com/wiki/Wheelbarrow) |	Villagers work 10% faster
 
 #### `blacksmith`
 
@@ -52,9 +52,9 @@ age | tech | web | description
 
 age | tech | web | description
 ----|------|--------------------|------------
-3    |`ri-imperial-age`|	[Imperial Age](https://ageofempires.fandom.com/wiki/Imperial_Age_(Age_of_Empires_II)) |	Advance to the Imperial Age
-3    |`ri-hand-cart`|	[Hand Cart](https://ageofempires.fandom.com/wiki/Hand_Cart) |	Villagers work 10% faster
-3    |`ri-town-patrol`|	[Town Patrol](https://ageofempires.fandom.com/wiki/Town_Patrol) |	Town Centers +5 line of sight
+3   |`ri-imperial-age`|	[Imperial Age](https://ageofempires.fandom.com/wiki/Imperial_Age_(Age_of_Empires_II)) |	Advance to the Imperial Age
+3   |`ri-hand-cart`|	[Hand Cart](https://ageofempires.fandom.com/wiki/Hand_Cart) |	Villagers work 10% faster
+3   |`ri-town-patrol`|	[Town Patrol](https://ageofempires.fandom.com/wiki/Town_Patrol) |	Town Centers +5 line of sight
 
 #### `blacksmith`
 
@@ -100,7 +100,7 @@ age | tech | web | description
 3	|`ri-fortified-wall`|	[Fortified Wall](https://ageofempires.fandom.com/wiki/Fortified_Wall) |	Buildings +5 pierce armor
 3   | `ri-guard-tower` | [Guard Tower](https://ageofempires.fandom.com/wiki/Guard_Tower) | Towers +2 attack
 3	|`ri-ballistics`|	[Ballistics](https://ageofempires.fandom.com/wiki/Ballistics) |	Archers fire faster and more accurately
-3    |`ri-heated-shot`|	[Heated Shot](https://ageofempires.fandom.com/wiki/Heated_Shot) |	Towers and Castles +2 attack vs ships
+3   |`ri-heated-shot`|	[Heated Shot](https://ageofempires.fandom.com/wiki/Heated_Shot) |	Towers and Castles +2 attack vs ships
 3	|`ri-masonry`|	[Masonry](https://ageofempires.fandom.com/wiki/Masonry) |	Buildings +10% HP
 
 ### Věk IV: Imperial Age
@@ -180,7 +180,7 @@ age | tech | web | description
 2	|`ri-coinage`|	[Coinage](https://ageofempires.fandom.com/wiki/Coinage) |	Trade fee 15%
 3	|`ri-banking`|	[Banking](https://ageofempires.fandom.com/wiki/Banking) |	Trade fee 15%
 3   |`ri-caravan`|	[Caravan](https://ageofempires.fandom.com/wiki/Caravan) |	Trade units move 50% faster
-4    |`ri-guilds`|	[Guilds](https://ageofempires.fandom.com/wiki/Guilds) |	Trade fee 15%
+4   |`ri-guilds`|	[Guilds](https://ageofempires.fandom.com/wiki/Guilds) |	Trade fee 15%
 
 
 #### `mill`

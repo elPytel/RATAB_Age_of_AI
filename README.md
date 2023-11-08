@@ -268,17 +268,8 @@ AI nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly
 
 
 ### Boj
-Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které jednotky:
 
-| jednotka | kasárna | 
-| --- | --- | 
-`archer-line`       | `archery-range`  | 
-`militiaman-line`   | `barracks`       | 
-`knight-line`       | `stable`         | 
-`monk`              | `monastery`      | 
-`siege-weapon-line` | `siege-workshop` |
-
-#### Jednotky a výzkum (Units + Researching)
+#### Výzkum (Researching)
 Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research RESEARCH`) a (`research RESEARCH`). Příklad:
 
 ``` LISP
@@ -291,10 +282,40 @@ Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research R
 
 Tenhle příklad bude však vyžadovat budovu univerzity.
 
-#### Vzorové kódu pro armádu
-- Příklad verbování armády podle obtížnosti [zde](./src/army_training.per).
-- Příklad útoku na nepřítele s časováním [zde](./src/attack.per).
-  - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
+#### Jednotky (Units)
+Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které jednotky:
+
+| jednotka | kasárna | od doby |
+| --- | --- | --- |
+`militiaman-line`   | `barracks`       | 1
+`spearman-line`     | `barracks`       | 2
+`eagle-warrior-line` | `barracks`      | 2
+`archer-line`       | `archery-range`  | 2
+`skirmisher-line`   | `archery-range`  | 2
+`cavalry-archer-line`   | `archery-range`  | 3
+`scout-cavalry-line`    | `stable`     | 2
+`knight-line`       | `stable`         | 3
+`monk`              | `monastery`      | 3
+`battering-ram-line`    | `siege-workshop` | 2
+`scorpion-line`     | `siege-workshop` | 3
+`bombard-cannon-line`   | `siege-workshop` | 4
+`petard`            | `castle`         | 3
+`ratha-ranged-line` | `castle`         | 3
+`longbowman-line`   | `castle`         | 3
+`trebuchet`         | `castle`         | 4
+
+#### Výcvik (Training)
+![train](assets/im-a-train.jpg)
+
+Výcvik jednotek je velmi podobný stavění budov. Můžeme použít podmínku `can-train`:
+
+``` LISP
+(defrule
+	(can-train militiaman-line)
+=>
+	(train militiaman-line)
+)
+```
 
 ### Náhodné číslo
 Pokud chceme vložit do našit návrhů trochu nahodilosti a nepředvídatelnosti, tak můžeme využít náhodná čísla. Náhodná čísla můžeme generovat pomocí akce `generate-random-number`:
@@ -390,6 +411,11 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 
 - [basic.ai](./src/basic.ai)
 - [basic.per](./src/basic.per)
+
+### Vzorové kódu pro armádu
+- Příklad verbování armády podle obtížnosti [army_training.per](./src/army_training.per).
+- Příklad útoku na nepřítele s časováním [attack.per](./src/attack.per).
+  - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
 
 ### Nahrání dílčích personalit
 Můžete načíst soubory osobnosti z dalších souborů. To však nejde použít v pravidlech.
