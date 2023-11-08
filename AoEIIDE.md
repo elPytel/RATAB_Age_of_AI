@@ -3,9 +3,9 @@
 
 ## Jednotlivé věky
 
-ID |	Name |	Description
+ID | Name |	Wiki
 ---|------|-------------
-0	|`dark-age`	| [Dark Age](https://ageofempires.fandom.com/wiki/Dark_Age_(Age_of_Empires_II))
+0   |`dark-age`	 |  [Dark Age](https://ageofempires.fandom.com/wiki/Dark_Age_(Age_of_Empires_II))
 1	|`feudal-age`|	[Feudal Age](https://ageofempires.fandom.com/wiki/Feudal_Age_(Age_of_Empires_II))
 2	|`castle-age`|	[Castle Age](https://ageofempires.fandom.com/wiki/Castle_Age_(Age_of_Empires_II))
 3	|`imperial-age`|	[Imperial Age](https://ageofempires.fandom.com/wiki/Imperial_Age_(Age_of_Empires_II))
@@ -20,9 +20,10 @@ ID |	Name |	Description
 
 ## Budovy
 
-- `blacksmith`
+### Blacksmith
+`blacksmith`
 
-age | tech | web | description
+age | tech | wiki | description
 ----|------|--------------------|------------
 2	|`forging`|	[Forging](https://ageofempires.fandom.com/wiki/Forging) |	Infantry and cavalry +1 attack
 2	|`scale-mail-armor`|	[Scale Mail Armor](https://ageofempires.fandom.com/wiki/Scale_Mail_Armor) |	Infantry +1/+1 armor
@@ -42,7 +43,26 @@ age | tech | web | description
 4	|`ring-archer-armor`|	[Ring Archer Armor](https://ageofempires.fandom.com/wiki/Ring_Archer_Armor) |	Archers +1/+2 armor
 
 
-- `university`
+### Archery Range
+`archery-range`
+
+age | tech | web | description
+----|------|--------------------|------------
+2	|`crossbowman`|	[Crossbowman](https://ageofempires.fandom.com/wiki/Crossbowman) |	Archers +1 attack
+2	|`arbalester`|	[Arbalester](https://ageofempires.fandom.com/wiki/Arbalester) |	Archers +1 attack
+2	|`thumb-ring`|	[Thumb Ring](https://ageofempires.fandom.com/wiki/Thumb_Ring) |	Archers fire faster and more accurately
+2	|`parthian-tactics`|	[Parthian Tactics](https://ageofempires.fandom.com/wiki/Parthian_Tactics) |	Cavalry archers +1 attack, +2 range
+3	|`elite-skirmisher`|	[Elite Skirmisher](https://ageofempires.fandom.com/wiki/Elite_Skirmisher) |	Skirmishers +1 attack, +1 range
+3	|`heavy-cavalry-archer`|	[Heavy Cavalry Archer](https://ageofempires.fandom.com/wiki/Heavy_Cavalry_Archer) |	Cavalry archers +1 attack, +1 range
+3	|`elite-cannon-galleon`|	[Elite Cannon Galleon](https://ageofempires.fandom.com/wiki/Elite_Cannon_Galleon) |	Cannon Galleons +40 hit points, +4 attack
+3	|`elite-longbowman`|	[Elite Longbowman](https://ageofempires.fandom.com/wiki/Elite_Longbowman) |	Longbowmen +1 attack, +1 range
+
+
+### Barracks
+`barracks`
+
+### University
+`university`
 
 age | tech | web | description
 ----|------|--------------------|------------
@@ -64,3 +84,8 @@ age | tech | web | description
 4	|`conscription`|	[Conscription](https://ageofempires.fandom.com/wiki/Conscription_(Age_of_Empires_II)) |	Units created 33% faster
 4   | `spies-treason` | [Spies/Treason](https://ageofempires.fandom.com/wiki/Spies_(Age_of_Empires_II)) | Reveals enemy positions on the map
 
+### Monastery 
+`monastery`
+
+age | tech | web | description
+----|------|--------------------|------------

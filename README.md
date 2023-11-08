@@ -270,8 +270,8 @@ AI nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly
 ### Boj
 Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které jednotky:
 
-| jednotka | kasárna | technologie |
-| --- | --- | --- |
+| jednotka | kasárna | 
+| --- | --- | 
 `archer-line`       | `archery-range`  | 
 `militiaman-line`   | `barracks`       | 
 `knight-line`       | `stable`         | 
@@ -394,9 +394,9 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 ### Nahrání dílčích personalit
 Můžete načíst soubory osobnosti z dalších souborů. To však nejde použít v pravidlech.
 ``` LISP
-(load "persons\darkage")
+(load "persons\dark-age")
 ```
-(Toto předpokládá, že existuje soubor s názvem *darkage.per* ve složce s názvem *persons*)
+(Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *persons*)
 
 ## Vy toho chcete víc?
 
