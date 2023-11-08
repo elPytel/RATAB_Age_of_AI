@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,vim
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,vim
 
+### User defined ###
+*/moje/*
+
 ### Vim ###
 # Swap
 [._]*.s[a-v][a-z]

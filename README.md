@@ -398,7 +398,7 @@ Můžete načíst soubory osobnosti z dalších souborů. To však nejde použí
 ```
 (Toto předpokládá, že existuje soubor s názvem *darkage.per* ve složce s názvem *persons*)
 
-## Co teď?
+## Vy toho chcete víc?
 
 - rozšíření scriptů o aritmetiku [zde](https://airef.github.io/parameters/parameters-details.html#mathOp).
 
