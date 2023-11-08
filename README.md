@@ -3,6 +3,8 @@ Pojď si zahrát legendární strategii Age of Empires II, naučit se základy p
 
 ![Age of AI](./assets/Age_of_AI.jpeg)
 
+Vícuc zdrojů ke hře [AoE2](AoEIIDE.md).
+
 ## Instalace Age of Empires 2
 Stažení a nainstalace ze [Steamu](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/).
 
@@ -270,9 +272,11 @@ Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. N
 
 | jednotka | kasárna | technologie |
 | --- | --- | --- |
-`archer-line`       | `archery-range`  |
-`militiaman-line`   | `barracks`  |
-`knight-line`       | `stable`|
+`archer-line`       | `archery-range`  | 
+`militiaman-line`   | `barracks`       | 
+`knight-line`       | `stable`         | 
+`monk`              | `monastery`      | 
+`siege-weapon-line` | `siege-workshop` |
 
 #### Jednotky a výzkum (Units + Researching)
 Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research RESEARCH`) a (`research RESEARCH`). Příklad:
