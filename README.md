@@ -3,7 +3,9 @@ Pojď si zahrát legendární strategii Age of Empires II, naučit se základy p
 
 ![Age of AI](./assets/Age_of_AI.jpeg)
 
-Vícuc zdrojů ke hře [AoE2](AoEIIDE.md).
+- Vícuc zdrojů ke hře [AoE2](AoEIIDE.md).
+- Pokud chcete programovat scripty jako programátor, tak můžete využít [Visual Studio Code](https://code.visualstudio.com/).
+  - Vhodným rozšířením pak je [AoE2 AI Scripting](https://marketplace.visualstudio.com/items?itemName=knightthyme-tools.aoe2-aiscript). Ten posktuje základní syntaxi a validaci kódu.
 
 ## Instalace Age of Empires 2
 Stažení a nainstalace ze [Steamu](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/).
@@ -77,26 +79,28 @@ Pro snadnější práci bychom v jazycích typu C použili kontrukci zvanou jako
 ![Confusion](assets/confusion.jpeg)
 
 ``` LISP
-(defconst gl-train-militia 1) ; Nastavi goal gl-train-militia na 1
-(defconst gl-train-archers 2) ; Nastavi goal gl-train-archers na 2
+(defconst gl-train-militia 1) ; Nastavi constantu gl-train-militia na 1
+(defconst gl-train-archers 2) ; Nastavi constantu gl-train-archers na 2
 
 ; Nastavi pocatecni hodnotu cile na 0
 (defrule
     (true)
 =>
-    (set-goal gl-train-militia 0)
-    (set-goal gl-train-archers 0)
+    (set-goal gl-train-militia 0) ; Nastavi cile gl-train-militia na 0
+    (set-goal gl-train-archers 0) ; Nastavi cile gl-train-archers na 0
     (disable-self)
 )
 
 ; Nekde hloubeji v kodu jsme se rozhodli, ze chceme nastavit cil gl-train-militia na 1 a tim povolit trenovani vojaku
 (defrule
-    (goal gl-train-militia 1)
+    (goal gl-train-militia 1) ; Zkontroluje, zda je cil gl-train-militia roven 1
     (can-train militiaman-line)
 =>
     (train militiaman-line)
 )
 ```
+
+**Pozor!** Cíle jsou vždy inicializovány na $-1$ a může jich být nastaveno pouze $512$.
 
 ### Boolovské operátory (AND, OR, NOT)
 ![2bOR!2b](assets/2bOR!2b.jpg)
@@ -107,9 +111,11 @@ Pro návrh složitějších pravidel lze jednotlivé výrazy spojovat pomocí bo
 - `AND` "a" také bere dvě podmínky a jeho jediným účelem je být použita v ORu.
 - `NOT` "nikoli" bere pouze jednu podmínku a je pravdivá, pokud je podmínka nepravdivá.
 
+**Pozor**! OR smí mít jen dva prvky! Pokud chcete použít více než dvě podmínky, musíte použít další vnořený OR.
+
 ``` LISP
 (defrule
-    (or
+    (or ; Toto pravidlo se spustí, pokud je pravdivá jedna z následujících podmínek:
         (condition 1)
         (condition 2)
     )
@@ -146,7 +152,7 @@ Výrazy mohou být také porovnávány pomocí následujících operátorů:
 - `<` (less than) menší než
 - `>=` (greater than or equal to) větší nebo rovno než
 - `<=` (less than of equal to) menší nebo rovno než
-- `==` (equal to) rovno než
+- `==` (equal to) rovno
 
 Příklad:
 
@@ -281,6 +287,7 @@ Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research R
 ```
 
 Tenhle příklad bude však vyžadovat budovu univerzity.
+Seznam technologií a jejich budov je uveden v [tabulkách](AoEIIDE.md).
 
 #### Jednotky (Units)
 Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které jednotky:
@@ -298,11 +305,14 @@ Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. N
 `monk`              | `monastery`      | 3
 `battering-ram-line`    | `siege-workshop` | 2
 `scorpion-line`     | `siege-workshop` | 3
+`mangonel-line`     | `siege-workshop` | 3
 `bombard-cannon-line`   | `siege-workshop` | 4
 `petard`            | `castle`         | 3
 `ratha-ranged-line` | `castle`         | 3
 `longbowman-line`   | `castle`         | 3
 `trebuchet`         | `castle`         | 4
+
+Ceny jednotlivých jednotek jsou uvedeny na [webu]([AoEIIDE.md](https://www.unitstatistics.com/age-of-empires2/)).
 
 #### Výcvik (Training)
 ![train](assets/im-a-train.jpg)
@@ -389,11 +399,18 @@ Pokud chceme, aby AI něco prohlásila přesně po 30 sekundách, můžeme to sn
 
 Když chceme, aby naše AI komunikovala každých 30 sekund, můžeme náš příkaz `disable-timer` následovat příkazem `enable-timer` přímo poté.
 
+**Pozor!** Časovačů lze přidat pouze $50$.
 
-### Přidání AI scriptu do hry
+## Přidání AI scriptu do hry
 ![AI_ifff](assets/AI_ifff.jpg)
 
-Nyní jste pravděpodobně netrpěliví, abyste své pravidlo chování otestovali. Nejprve musíte svou AI uložit. Po té co jste pro ní vybrali jméno, uložte soubor s příponu `.per`. Všechny AI jsou uloženy ve složce AI. Přejděte do adresáře `My Computer/Local Disk (C)/Program Files/Microsoft Games/Age of Empires II/AI/` a do této složky uložte svou AI. 
+Nyní jste pravděpodobně netrpěliví, abyste své pravidlo chování otestovali. Nejprve musíte svou AI uložit. Po té co jste pro ní vybrali jméno, uložte soubor s příponu `.per`.  
+
+Zde je potřeba přejít do adresáře ze kterého Age of Empires 2 čte AI. Záleží jak jste hru instalovali:
+- Pokud jste použili Steam, tak je to ***My Computer/Local Disk (C)/Program Files/Steam/steamapps/common/Age2DE/resources/_common/ai***. 
+- Pokud jste použili CD, tak je to ***My Computer/Local Disk (C)/Program Files/Microsoft Games/Age of Empires II/AI/***.
+
+Všechny AI jsou uloženy ve složce AI a tak do této složky uložte svou AI. 
 
 Dále vytvořte nový prázdný dokument a ten pojmenujte stejným názvem jako vaši AI, ale s příponou `.ai` místo `.per`.
 
@@ -405,6 +422,9 @@ Tedy názvy vašich dvou souborů mohou být:
 Soubor `.per` (personality) obsahuje veškerý kód, který hra čte. Hra však potřebuje soubor `.ai`, aby mohla otevřít soubor AI. Takže každý soubor AI, který vytvoříte, bude potřebovat dva soubory, jeden s příponou `.per` a jeden s příponou `.ai`.
 
 Nyní, abyste viděli svou AI v akci, otevřete Age of Empires a připravte se na spuštění náhodné mapové hry. Chcete-li se svou AI hrát v náhodné hře, klikněte na šipku vlevo od vašeho hráčského souboru a vyberte název zvolené AI.
+
+### Spuštění hry s vaším AI
+Spusťte hru, vyberte heu jednoho hráře v módu "Skirmish". Zde sestavte herní scenraii a vyberte vaši AI. Pokud ji nemůžete přidělit k žádnému hráči, tak je pravděpodobně něco špatně s vaším souborem `.ai` (není v adresáři AI, nebo je špatně pojmenovaný).
 
 ## Demo soubory
 Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
