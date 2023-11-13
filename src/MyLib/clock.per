@@ -1,0 +1,48 @@
+(defrule
+    (game-time >= 60)
+=>
+    (chat-local-to-self "1 minute has passed.")
+    (disable-self)
+)
+
+(defrule
+    (game-time >= 120)
+=>
+    (chat-local-to-self "2 minutes have passed.")
+    (disable-self)
+)
+
+(defrule
+    (game-time >= 180)
+=>
+    (chat-local-to-self "3 minutes have passed.")
+    (disable-self)
+)
+
+(defrule
+    (game-time >= 240)
+=>
+    (chat-local-to-self "4 minutes have passed.")
+    (disable-self)
+)
+
+(defrule
+    (game-time >= 300)
+=>
+    (chat-local-to-self "5 minutes have passed.")
+    (disable-self)
+)
+
+(defrule
+    (game-time >= 360)
+=>
+    (chat-local-to-self "5 minutes have passed.")
+    (disable-self)
+)
+
+(defrule
+    (game-time >= 420)
+=>
+    (chat-local-to-self "7 minutes have passed.")
+    (disable-self)
+)

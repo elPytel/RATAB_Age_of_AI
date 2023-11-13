@@ -1,0 +1,84 @@
+(defrule
+	(building-type-count-total farm g:< desired-number-farms)
+	(can-build farm)
+=>	
+	(build farm))
+
+(defrule
+	(building-type-count-total lumber-camp g:< desired-number-lumber-camps)
+	(can-build lumber-camp)
+=>	
+	(build lumber-camp))
+
+(defrule
+	(building-type-count-total mining-camp g:< desired-number-mining-camps)
+	(can-build mining-camp)
+=>	
+	(build mining-camp))
+
+(defrule
+	(building-type-count-total barracks g:< desired-number-barracks)
+	(can-build barracks)
+=>
+	(build barracks))
+
+(defrule
+	(building-type-count-total archery-range g:< desired-number-archery-ranges)
+	(can-build archery-range)
+=>
+	(build archery-range))
+
+(defrule
+	(building-type-count-total stable g:< desired-number-stables)
+	(can-build stable)
+=>
+	(build stable))
+
+(defrule
+	(building-type-count-total siege-workshop g:< desired-number-workshops)
+	(can-build siege-workshop)
+=>
+	(build siege-workshop)
+	(chat-local-to-self "Building a siege workshop."))
+
+(defrule
+	(building-type-count-total blacksmith g:< desired-number-blacksmiths)
+	(can-build blacksmith)
+=>
+	(build blacksmith))
+
+(defrule
+	(building-type-count-total market g:< desired-number-markets)
+	(can-build market)
+=>
+	(build market))
+
+(defrule
+	(building-type-count-total dock g:< desired-number-docks)
+	(can-build dock)
+=>
+	(build dock))
+
+(defrule
+	(building-type-count-total university g:< desired-number-universities)
+	(can-build university)
+=>
+	(build university))
+
+(defrule
+	(building-type-count-total monastery g:< desired-number-monasteries)
+	(can-build monastery)
+=>
+	(build monastery))
+
+(defrule
+	(building-type-count-total watch-tower g:< desired-number-watch-towers)
+	(can-build watch-tower)
+=>	
+	(build-forward watch-tower))
+
+(defrule
+	(building-type-count-total castle g:< desired-number-castles)
+	(can-build castle)
+=>
+	(build-forward castle))

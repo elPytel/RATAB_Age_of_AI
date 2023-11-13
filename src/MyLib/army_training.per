@@ -1,0 +1,249 @@
+;CONST DEF ========================================
+;barracks
+(defconst gl-train-militia 401)
+(defconst gl-militia-amount 402)
+(defconst gl-train-spearman 403)
+(defconst gl-spearman-amount 404)
+
+;archery-range
+(defconst gl-train-archers 407)
+(defconst gl-archers-amount 408)
+(defconst gl-train-skirmisher 409)
+(defconst gl-skirmisher-amount 4)
+(defconst gl-train-cavalry-archer 411)
+(defconst gl-cavalry-archer-amount 412)
+
+;stable
+(defconst gl-train-scout-cavalry 413)
+(defconst gl-scout-cavalry-amount 414)
+(defconst gl-train-knight 415)
+(defconst gl-knight-amount 417)
+
+;monastery
+(defconst gl-train-monk 418)
+(defconst gl-monk-amount 419)
+
+;siege-workshop
+(defconst gl-train-battering-ram 420)
+(defconst gl-ram-amount 421)
+(defconst gl-train-scorpion 422)
+(defconst gl-scorpion-amount 423)
+(defconst gl-train-bombard-cannon 424)
+(defconst gl-bombard-cannon-amount 425)
+(defconst gl-train-mangonel 405)
+(defconst gl-mangonel-amount 406)
+
+;castle
+(defconst gl-train-longbowman 426)
+(defconst gl-longbowman-amount 427)
+(defconst gl-train-trebuchet 428)
+(defconst gl-trebuchet-amount 429)
+
+;GOAL DEF =========================================
+
+(defrule
+    (true)
+=>
+	;barracks
+    (set-goal gl-train-militia no)
+	(set-goal gl-train-spearman no)
+	;archery-range
+	(set-goal gl-train-archers no)
+	(set-goal gl-train-skirmisher no)
+	(set-goal gl-train-cavalry-archer no)
+	;stable
+	(set-goal gl-train-scout-cavalry no)
+	(set-goal gl-train-knight no)
+	;monastery
+	(set-goal gl-train-monk no)
+	;siege-workshop
+	(set-goal gl-train-battering-ram no)
+	(set-goal gl-train-scorpion no)
+	(set-goal gl-train-mangonel no)
+	(set-goal gl-train-bombard-cannon no)
+	(chat-local-to-self "Training disabled")
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+	;castle
+	(set-goal gl-train-longbowman no)
+	(set-goal gl-train-trebuchet no)
+	(disable-self)
+)
+
+(defrule
+	(true)
+=>
+	;barracks
+	(set-goal gl-militia-amount 0)
+	(set-goal gl-spearman-amount 0)
+	;archery-range
+	(set-goal gl-archers-amount 0)
+	(set-goal gl-skirmisher-amount 0)
+	(set-goal gl-cavalry-archer-amount 0)
+	;stable
+	(set-goal gl-scout-cavalry-amount 0)
+	(set-goal gl-knight-amount 0)
+	;monastery
+	(set-goal gl-monk-amount 0)
+	;siege-workshop
+	(set-goal gl-ram-amount 0)
+	(set-goal gl-scorpion-amount 0)
+	(set-goal gl-mangonel-amount 0)
+	(set-goal gl-bombard-cannon-amount 0)
+	(chat-local-to-self "Army amount set to 0")
+	(disable-self)
+)
+
+(defrule
+	(true)
+=>
+	;castle
+	(set-goal gl-longbowman-amount 0)
+	(set-goal gl-trebuchet-amount 0)
+	(disable-self)
+)
+
+;Training Units ===================================
+
+(defrule
+	(up-compare-goal gl-recruit-army c:== yes)
+	(up-compare-goal gl-train-militia c:== yes)
+=> 	
+	(chat-local-to-self "Set to training Militia")
+)
+    
+(defrule
+	(unit-type-count-total militiaman-line g:< gl-militia-amount)
+=> 	
+	(chat-local-to-self "Militia to small training...")
+)
+
+(defrule
+	(up-compare-goal gl-recruit-army c:== yes)
+    (up-compare-goal gl-train-militia c:== yes)
+	(unit-type-count-total militiaman-line g:< gl-militia-amount)
+    (can-train militiaman-line)
+=>
+    (train militiaman-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-spearman yes)
+	(can-train spearman-line)
+	(unit-type-count-total spearman-line g:< gl-spearman-amount)
+=>
+	(train spearman-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-archers yes)
+	(can-train archer-line)
+	(unit-type-count-total archer-line g:< gl-archers-amount)
+=>
+	(train archer-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-skirmisher yes)
+	(can-train skirmisher-line)
+	(unit-type-count-total skirmisher-line g:< gl-skirmisher-amount)
+=>
+	(train skirmisher-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-cavalry-archer yes)
+	(can-train cavalry-archer-line)
+	(unit-type-count-total cavalry-archer-line g:< gl-cavalry-archer-amount)
+=>
+	(train cavalry-archer-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-scout-cavalry yes)
+	(can-train scout-cavalry-line)
+	(unit-type-count-total scout-cavalry-line g:< gl-scout-cavalry-amount)
+=>
+	(train scout-cavalry-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-knight yes)
+	(can-train knight-line)
+	(unit-type-count-total knight-line g:< gl-knight-amount)
+=>
+	(train knight-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-monk yes)
+	(can-train monk)
+	(unit-type-count-total monk g:< gl-monk-amount)
+=>
+	(train monk)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-battering-ram yes)
+	(can-train battering-ram-line)
+	(unit-type-count-total battering-ram-line g:< gl-ram-amount)
+=>
+	(train battering-ram-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-scorpion yes)
+	(can-train scorpion-line)
+	(unit-type-count-total scorpion-line g:< gl-scorpion-amount)
+=>
+	(train scorpion-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-mangonel yes)
+	(can-train mangonel-line)
+	(unit-type-count-total mangonel-line g:< gl-mangonel-amount)
+=>
+	(train mangonel-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-bombard-cannon yes)
+	(can-train bombard-cannon-line)
+	(unit-type-count-total bombard-cannon-line g:< gl-bombard-cannon-amount)
+=>
+	(train bombard-cannon-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-longbowman yes)
+	(can-train longbowman-line)
+	(unit-type-count-total longbowman-line g:< gl-longbowman-amount)
+=>
+	(train longbowman-line)
+)
+
+(defrule
+	(goal gl-recruit-army yes)
+	(goal gl-train-trebuchet yes)
+	(can-train trebuchet)
+	(unit-type-count-total trebuchet g:< gl-trebuchet-amount)
+=>
+	(train trebuchet)
+)
