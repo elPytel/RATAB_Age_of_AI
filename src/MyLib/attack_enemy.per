@@ -1,6 +1,6 @@
 (defconst gl-attack-time-range 6)
 (defconst gl-attack-interval 7)
-(defconst tm-game-time 8)
+(defconst gl-game-time 8)
 
 (defrule
 	(true)
@@ -26,7 +26,7 @@
 =>
 	(disable-timer 1)
 	(set-strategic-number sn-number-attack-groups 0)
-	(up-get-fact game-time 0 tm-game-time)
+	(up-get-fact game-time 0 gl-game-time)
 	(generate-random-number 20)
 	(up-get-fact random-number 0 gl-attack-time-range)
 	(up-modify-goal gl-attack-interval g:+ gl-attack-time-range)
@@ -38,7 +38,7 @@
 	(timer-triggered 2)
 =>
 	(set-strategic-number sn-number-attack-groups 200)
-	(up-get-fact game-time 0 tm-game-time)
+	(up-get-fact game-time 0 gl-game-time)
 	(disable-timer 2)	
 	(enable-timer 1 20)
 )

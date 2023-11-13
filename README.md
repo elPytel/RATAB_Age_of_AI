@@ -8,7 +8,10 @@ Pojď si zahrát legendární strategii Age of Empires II, naučit se základy p
   - Vhodným rozšířením pak je [AoE2 AI Scripting](https://marketplace.visualstudio.com/items?itemName=knightthyme-tools.aoe2-aiscript). Ten posktuje základní syntaxi a validaci kódu.
 
 ## Instalace Age of Empires 2
-Stažení a nainstalace ze [Steamu](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/).
+### Nákup hry
+Následující návod využívá Steam, což je aplikace pro nákup her. Pokud chcete koupit hru jiným způsobem, určitě to není problém, akorát vám pro to neposkytneme návod.
+1. Stáhněte si [Steam](https://store.steampowered.com/) a vytvořte si účet.
+2. Kupte si a nainstalujte Age of Empires II: Definitive Edition [dze](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/). 
 
 ## Scriptování AI
 ![AI](assets/AI.jpg)
@@ -100,7 +103,7 @@ Pro snadnější práci bychom v jazycích typu C použili kontrukci zvanou jako
 )
 ```
 
-**Pozor!** Cíle jsou vždy inicializovány na $-1$ a může jich být nastaveno pouze $512$.
+**Pozor!** Cíle jsou vždy inicializovány na $-1$ a může jich být nastaveno pouze $512$ a mohou nabývat hodnot 32-bit integeru.
 
 ### Boolovské operátory (AND, OR, NOT)
 ![2bOR!2b](assets/2bOR!2b.jpg)
@@ -296,7 +299,6 @@ Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. N
 | --- | --- | --- |
 `militiaman-line`   | `barracks`       | 1
 `spearman-line`     | `barracks`       | 2
-`eagle-warrior-line` | `barracks`      | 2
 `archer-line`       | `archery-range`  | 2
 `skirmisher-line`   | `archery-range`  | 2
 `cavalry-archer-line`   | `archery-range`  | 3
@@ -312,7 +314,7 @@ Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. N
 `longbowman-line`   | `castle`         | 3
 `trebuchet`         | `castle`         | 4
 
-Ceny jednotlivých jednotek jsou uvedeny na [webu]([AoEIIDE.md](https://www.unitstatistics.com/age-of-empires2/)).
+Ceny jednotlivých jednotek jsou uvedeny na [webu](https://www.unitstatistics.com/age-of-empires2/).
 
 #### Výcvik (Training)
 ![train](assets/im-a-train.jpg)
@@ -326,6 +328,25 @@ Výcvik jednotek je velmi podobný stavění budov. Můžeme použít podmínku 
 	(train militiaman-line)
 )
 ```
+
+#### Boj (Attack)
+
+``` LISP
+(defrule
+    (military-population g:>= 5)
+=>
+    (up-set-attack-stance <UnitId> <typeOp> <AttackStance>)
+    (attack-now)
+    (disable-self)
+)
+```
+
+ID	| Name	| Description
+--- | --- | ---
+-1	| -1	| Bez nastavení útoku.
+0	| `stance-aggressive`	| Agresivní postoj. Jednotky budou útočit na všechny nepřátelské objekty ve svém zorném poli a pronásledovat je.
+1	| `stance-defensive`	| Obranný postoj. Jednotky budou útočit na většinu nepřátelských objektů ve svém zorném poli, ale vrátí se na své původní místo, pokud nepřátelské objekty opustí oblast.
+2	| `stance-stand-ground`	| Postoj na místě. Jednotky budou útočit pouze na nepřátelské objekty, pokud mohou útočit na jednotku z jejího aktuálního umístění.
 
 ### Náhodné číslo
 Pokud chceme vložit do našit návrhů trochu nahodilosti a nepředvídatelnosti, tak můžeme využít náhodná čísla. Náhodná čísla můžeme generovat pomocí akce `generate-random-number`:

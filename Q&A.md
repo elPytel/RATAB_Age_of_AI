@@ -24,8 +24,14 @@ BuildingId: [wiki](https://airef.github.io/tables/objects.html)
 ### Psaní do konzole
 
 ``` LISP
-(chat-local-to-self "Hi")
+(chat-local-to-self "Test")
+(chat-to-all "Hi")
+(up-chat-data-to-self "Food: %d." c: 5)
 ```
+
+### Logování
+- `up-log-data` 
+- [wiki](https://airef.github.io/commands/commands-details.html#up-log-data)
 
 ## Uprava AI scriptů
 
