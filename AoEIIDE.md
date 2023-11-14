@@ -1,5 +1,16 @@
 # Age of Empires II Definitive Edition
 
+Základní strategie [wiki](https://ageofempires.fandom.com/wiki/Build_order).
+
+## Suroviny
+
+ID	| Název	| Popis
+--- | --- | ---
+0	| `food`	| Food. 
+1	| `wood`	| Wood.
+2	| `stone`	| Stone.
+3	| `gold`	| Gold.
+
 ## Armáda
 
 ### Jednotky
@@ -32,6 +43,10 @@ ID	| Name	| Description
 0	| `stance-aggressive`	| Agresivní postoj. Jednotky budou útočit na všechny nepřátelské objekty ve svém zorném poli a pronásledovat je.
 1	| `stance-defensive`	| Obranný postoj. Jednotky budou útočit na většinu nepřátelských objektů ve svém zorném poli, ale vrátí se na své původní místo, pokud nepřátelské objekty opustí oblast.
 2	| `stance-stand-ground`	| Postoj na místě. Jednotky budou útočit pouze na nepřátelské objekty, pokud mohou útočit na jednotku z jejího aktuálního umístění.
+
+## Hradby a perimetr
+- Perimeter [wiki](https://airef.github.io/parameters/parameters-details.html#Perimeter).
+- Stavba hradeb [tutoriál](https://aok.heavengames.com/university/other/how-to-wall-with-an-ai/).
 
 ## Jednotlivé věky
 

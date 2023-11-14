@@ -61,10 +61,10 @@ V AI obvykle raději používáme jména než čísla. To počítači nepomáhá
 Pokud chceme číslo uložit nod nějakým jménem, můžeme použít `defconst`:
 
 ``` LISP
-(defconst my-number 5)
+(defconst my_number 5)
 ```
 
-To znamená, že kdykoli napíšeme `my-number`, hra to bude interpretovat jako `5`.
+To znamená, že kdykoli napíšeme `my_number`, hra to bude interpretovat jako `5`.
 
 #### Cíle (Goals)
 Pokud chceme s našimi AI dělat něco opravdu složitějšího, musíme být schopni si pamatovat určitá čísla. `defconst` nám ale nepomůže, protože takové číslo nelze změnit. Zde přichází do hry systém cílů.
@@ -260,7 +260,7 @@ Toto zkontroluje, zda je nejbližší `RESOURCE` (surovina) vzdálena více než
 (resource-found RESOURCE)
 ```
 
-To ověří, zda AI prozkoumala konkrétní zdroj. Nechceme stavět body dropoff pro zdroj, který neexistuje!
+To ověří, zda AI prozkoumala konkrétní zdroj [surovin](AoEIIDE.md#suroviny). Nechceme stavět body dropoff pro zdroj, který neexistuje!
 
 Zde je příklad pro tábor na dřevo, který by měl věci ujasnit:
 
@@ -279,20 +279,11 @@ AI nebude sbírat suroviny, když jsou příliš daleko, i když jim doma došly
 
 
 ### Boj
-
-#### Výzkum (Researching)
-Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research RESEARCH`) a (`research RESEARCH`). Příklad:
-
-``` LISP
-(defrule
-    (can-research ri-ballistics)
-=>
-    (research ri-ballistics)
-)
-```
-
-Tenhle příklad bude však vyžadovat budovu univerzity.
-Seznam technologií a jejich budov je uveden v [tabulkách](AoEIIDE.md).
+Pro vytvoření armády musíte:
+1. Získat potřebnou dobu
+2. Postavit příslušné budovy kasáren
+3. Začít verbovat kýžené jednotky
+4. Volitelným bodem je vyzkoumat technologie, které vylepší vaši armádu
 
 #### Jednotky (Units)
 Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které [jednotky](AoEIIDE.md#jednotky).
@@ -311,13 +302,31 @@ Výcvik jednotek je velmi podobný stavění budov. Můžeme použít podmínku 
 )
 ```
 
-#### Boj (Attack)
-Nastavení typu útoku lze pomocí [AttackStance](AoEIIDE.md#attackstance). Například, pokud chceme, aby naše AI zaútočila, když má 5 nebo více vojáků, můžeme použít následující pravidlo:
+#### Výzkum (Researching)
+Stejné jako budovy, ale s (`can-train UNIT`) a (`train UNIT`), (`can-research RESEARCH`) a (`research RESEARCH`). Příklad:
+
 ``` LISP
 (defrule
-    (military-population g:>= 5)
+    (can-research ri-ballistics)
 =>
-    (up-set-attack-stance <UnitId> <typeOp> <AttackStance>)
+    (research ri-ballistics)
+)
+```
+
+Tenhle příklad bude však vyžadovat budovu univerzity.
+Seznam technologií a jejich budov je uveden v [tabulkách](AoEIIDE.md).
+
+#### Boj (Attack)
+Nastavení typu útoku lze pomocí [AttackStance](AoEIIDE.md#attackstance). 
+
+`(up-set-attack-stance <UnitId> <typeOp> <AttackStance>)`
+
+Například, pokud chceme, aby naše AI zaútočila, když má 5 nebo více vojáků, můžeme použít následující pravidlo:
+``` LISP
+(defrule
+    (military-population c:>= 5)
+=>
+    (up-set-attack-stance militiaman-line c: stance-aggressive)
     (attack-now)
     (disable-self)
 )
@@ -371,6 +380,8 @@ Toto spustí časovač `TIMER_NUMBER`, který bude odpočítávat `SECONDS` v se
 ``` LISP
 (timer-triggered TIMER_NUMBER)
 ```
+
+![times-up](assets/times-up-boom.jpg)
 
 Pokud chceme, aby AI něco prohlásila přesně po 30 sekundách, můžeme to snadno provést kombinací všech výše uvedených příkazů: 
 
@@ -433,6 +444,46 @@ Tento příkaz vše, co jsme ušetřili, a hodí to do společného zdroje. Komb
 
 To nám umožňuje ušetřit na kasárny, pokud je nemáme do 15 minuty. `can-build-with-escrow`, `can-train-with-escrow` nebo podobného funkce přidají escrowed částky k neescrowed částkám k při ověření dostupnosti.
 
+Automatické spoření a uvolňování surovin:
+``` LISP
+;ESCROW ============================================
+(defrule
+    (current-age == feudal-age)
+=>
+    (set-escrow-percentage wood 10)
+    (set-escrow-percentage food 10)
+    (set-escrow-percentage stone 10)
+    (set-escrow-percentage gold 10)
+    (chat-local-to-self "Escrow set.")
+    (disable-self)
+)
+
+; release escrow
+(defrule
+    (food-amount >= 500)
+=>
+    (release-escrow food)
+)
+
+(defrule
+    (wood-amount >= 500)
+=>
+    (release-escrow wood)
+)
+
+(defrule
+    (gold-amount >= 500)
+=>
+    (release-escrow gold)
+)
+
+(defrule
+    (stone-amount >= 500)
+=>
+    (release-escrow stone)
+)
+```
+
 ## Přidání AI scriptu do hry
 ![AI_ifff](assets/AI_ifff.jpg)
 
@@ -468,12 +519,100 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 
 - Seznam konstant: [constants.per](./src/MyLib/constants.per).
 - Stavění budov: [construction.per](./src/MyLib/construction.per).
+  - `gl-villager-count-*` musí mít nastavený požadovaný počet vesničanů v daném věku.
+- Postup do další doby: [age_up.per](./src/MyLib/age_up.per).
 - Generické časovače: [timers.per](./src/MyLib/timers.per).
+
+**Pozor!** Pro správné fungování striptu *timers.per* je potřeba jej vložit až na konec souboru *mojeAI.per*.
+
+Vzor pro použití *construction.per*:
+``` LISP
+(defrule
+    (current-age == feudal-age)
+=>
+    (up-modify-goal desired-number-farms c:+ 2)
+    (set-goal desired-number-barracks 1)
+    (set-goal desired-number-archery-ranges 1)
+    (disable-self)
+)
+```
+Totot pravidlo říká, že pokud je aktuální věk feudal age, tak AI bude chtít postavit 2 farmy, 1 kasárna a 1 lukostřelnici (samotné stavění je však řízeno pravidlem *construction.per*).
+
+
+Vzor pro použití *timers.per*:
+``` LISP
+(defrule
+    (timer-triggered tm-10s); kazdych 10 sekund
+=>
+    (up-get-fact military-population 0 gl-temp)
+    (up-chat-data-to-self "Army size %d." g: gl-temp)
+)
+```
 
 #### Pro armádu
 - Příklad verbování armády podle obtížnosti [army_training.per](./src/MyLib/army_training_simple.per).
+- Příklad verbování armády podle konfigurace [army_training.per](./src/MyLib/army_training.per).
 - Příklad útoku na nepřítele s časováním [attack.per](./src/MyLib/attack_enemy.per).
   - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
+
+Konfigurace ovladajici script *army_training.per*:
+``` LISP	
+(defrule
+    (current-age >= imperial-age)
+=>
+    (set-goal gl-minimum-army-size 50)
+    (set-goal gl-maximum-army-size 200)
+    (disable-self)
+)
+
+(defrule
+	(current-age >= imperial-age)
+=>
+	;barracks
+	(set-goal gl-militia-amount 100)
+	(set-goal gl-spearman-amount 0)
+	;archery-range
+	(set-goal gl-archers-amount 100)
+	(set-goal gl-skirmisher-amount 0)
+	(set-goal gl-cavalry-archer-amount 0)
+	;stable
+	(set-goal gl-scout-cavalry-amount 0)
+	(set-goal gl-knight-amount 0)
+	;monastery
+	(set-goal gl-monk-amount 5)
+	;siege-workshop
+	(set-goal gl-ram-amount 0)
+	(set-goal gl-scorpion-amount 0)
+	(set-goal gl-mangonel-amount 10)
+	(set-goal gl-bombard-cannon-amount 0)
+	(chat-local-to-self "Imperial age army size set")
+	(disable-self)
+)
+
+(defrule
+    (current-age >= imperial-age)
+=>
+	;barracks
+    (set-goal gl-train-militia yes)
+	(set-goal gl-train-spearman no)
+	;archery-range
+	(set-goal gl-train-archers yes)
+	(set-goal gl-train-skirmisher no)
+	(set-goal gl-train-cavalry-archer no)
+	;stable
+	(set-goal gl-train-scout-cavalry no)
+	(set-goal gl-train-knight no)
+	;monastery
+	(set-goal gl-train-monk yes)
+	;siege-workshop
+	(set-goal gl-train-battering-ram no)
+	(set-goal gl-train-scorpion no)
+	(set-goal gl-train-mangonel yes)
+	(set-goal gl-train-bombard-cannon no)
+    (disable-self)
+)
+```
+Tato konfigurace nastaví v jaké době a jakou armádu bude AI vytvářet. V tomto případě bude AI vytvářet armádu až po dosažení imperial age a bude se snažit mít 100 jednotek od povolených typů.
 
 ### Nahrání dílčích personalit
 Můžete načíst soubory osobnosti z dalších souborů. To však nejde použít v pravidlech.
@@ -483,6 +622,8 @@ Můžete načíst soubory osobnosti z dalších souborů. To však nejde použí
 (Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *MyLib*)
 
 ## Vy toho chcete víc?
+
+![fuck-it](assets/fuck-it-meme-breaking-bad-meth.jpg)
 
 - rozšíření scriptů o aritmetiku [zde](https://airef.github.io/parameters/parameters-details.html#mathOp).
 

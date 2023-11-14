@@ -39,5 +39,4 @@ BuildingId: [wiki](https://airef.github.io/tables/objects.html)
 
 ### Jak progresivně zvyšovat počet budov pro armádu?
 
-
 ### Jak upravit rozložení ekonomiky?

@@ -1,0 +1,41 @@
+(defrule
+    (building-type-count mill >= 1)
+    (building-type-count lumber-camp >= 1)
+    (civilian-population c:>= gl-villager-count-dark-age)
+    (can-research feudal-age)
+=>
+    (research feudal-age)
+    (chat-local-to-self "I am going to feudal age!")
+)
+
+(defrule
+    (building-type-count blacksmith >= 1)
+    (or 
+        (or
+            (building-type-count archery-range >= 1)
+            (building-type-count siege-workshop >= 1))
+        (building-type-count stable >= 1))
+    (civilian-population c:>= gl-villager-count-feudal-age)
+    (can-research castle-age)
+=>
+    (research castle-age)
+    (chat-local-to-self "I am going to castle age.")
+)
+
+(defrule
+    (or 
+        (building-type-count castle >= 1)
+        (and
+            (building-type-count university >= 1)
+            (or 
+                (building-type-count monastery >= 1)
+                (building-type-count siege-workshop >= 1)
+            )
+        )
+    )    
+    (civilian-population c:>= gl-villager-count-castle-age)
+    (can-research imperial-age)
+=>
+    (research imperial-age)
+    (chat-local-to-self "I am going to imperial age!")
+)
