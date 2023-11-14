@@ -1,14 +1,16 @@
 (defrule
-	(building-type-count-total farm g:< desired-number-farms)
-	(can-build farm)
-=>	
-	(build farm))
-
-(defrule
 	(building-type-count-total lumber-camp g:< desired-number-lumber-camps)
 	(can-build lumber-camp)
 =>	
-	(build lumber-camp))
+	(build lumber-camp)
+	(chat-local-to-self "Building lumber camp."))
+
+(defrule
+	(building-type-count-total farm g:< desired-number-farms)
+	(can-build farm)
+=>	
+	(build farm)
+	(chat-local-to-self "Building farm."))
 
 (defrule
 	(building-type-count-total mining-camp g:< desired-number-mining-camps)
@@ -23,6 +25,12 @@
 	(build barracks))
 
 (defrule
+	(building-type-count-total blacksmith g:< desired-number-blacksmiths)
+	(can-build blacksmith)
+=>
+	(build blacksmith))
+
+(defrule
 	(building-type-count-total archery-range g:< desired-number-archery-ranges)
 	(can-build archery-range)
 =>
@@ -32,7 +40,8 @@
 	(building-type-count-total stable g:< desired-number-stables)
 	(can-build stable)
 =>
-	(build stable))
+	(build stable)
+	(chat-local-to-self "Building stable"))
 
 (defrule
 	(building-type-count-total siege-workshop g:< desired-number-workshops)
@@ -40,12 +49,6 @@
 =>
 	(build siege-workshop)
 	(chat-local-to-self "Building a siege workshop."))
-
-(defrule
-	(building-type-count-total blacksmith g:< desired-number-blacksmiths)
-	(can-build blacksmith)
-=>
-	(build blacksmith))
 
 (defrule
 	(building-type-count-total market g:< desired-number-markets)

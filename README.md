@@ -454,8 +454,8 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 - [basic.per](./src/basic.per)
 
 ### Vzorové kódu pro armádu
-- Příklad verbování armády podle obtížnosti [army_training.per](./src/army_training.per).
-- Příklad útoku na nepřítele s časováním [attack.per](./src/attack.per).
+- Příklad verbování armády podle obtížnosti [army_training.per](./src/MyLib/army_training_simple.per).
+- Příklad útoku na nepřítele s časováním [attack.per](./src/MyLib/attack_enemy.per).
   - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
 
 ### Nahrání dílčích personalit

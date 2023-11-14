@@ -1,48 +1,20 @@
+(defconst tm_clock 1)
+(defconst gl_clock_interval 60)
+(defconst gl_game_time 120)
+
 (defrule
-    (game-time >= 60)
+    (game-time >= 5)
 =>
-    (chat-local-to-self "1 minute has passed.")
+    (enable-timer tm_clock gl_clock_interval)
     (disable-self)
 )
 
 (defrule
-    (game-time >= 120)
+    (timer-triggered tm_clock)
 =>
-    (chat-local-to-self "2 minutes have passed.")
-    (disable-self)
-)
-
-(defrule
-    (game-time >= 180)
-=>
-    (chat-local-to-self "3 minutes have passed.")
-    (disable-self)
-)
-
-(defrule
-    (game-time >= 240)
-=>
-    (chat-local-to-self "4 minutes have passed.")
-    (disable-self)
-)
-
-(defrule
-    (game-time >= 300)
-=>
-    (chat-local-to-self "5 minutes have passed.")
-    (disable-self)
-)
-
-(defrule
-    (game-time >= 360)
-=>
-    (chat-local-to-self "5 minutes have passed.")
-    (disable-self)
-)
-
-(defrule
-    (game-time >= 420)
-=>
-    (chat-local-to-self "7 minutes have passed.")
-    (disable-self)
+    (up-get-fact game-time 0 gl_game_time)
+    (up-chat-data-to-self "%d minutes has passed." g: gl_game_time)
+    (up-modify-goal gl_game_time c:/ gl_clock_interval)
+    (enable-timer tm_clock gl_clock_interval)
+    (up-chat-data-to-self "%d minutes has passed." g: gl_game_time)
 )

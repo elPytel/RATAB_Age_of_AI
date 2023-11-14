@@ -1,0 +1,33 @@
+(defrule
+    (true)
+=>
+    (enable-timer tm-5s 5)
+    (enable-timer tm-10s 10)
+    (enable-timer tm-30s 30)
+    (enable-timer tm-60s 60)
+    (disable-self)
+)
+
+(defrule
+    (timer-triggered tm-5s)
+=>
+    (enable-timer tm-5s 5)
+)
+
+(defrule
+    (timer-triggered tm-10s)
+=>
+    (enable-timer tm-10s 10)
+)
+
+(defrule
+    (timer-triggered tm-30s)
+=>
+    (enable-timer tm-30s 30)
+)
+
+(defrule
+    (timer-triggered tm-60s)
+=>
+    (enable-timer tm-60s 60)
+)
