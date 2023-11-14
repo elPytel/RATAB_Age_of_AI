@@ -168,6 +168,8 @@ Příklad:
 )
 ```
 
+Podrobný návod pro porovnávání konstant, cílů a strategiských čísel je [zde](https://airef.github.io/parameters/parameters-details.html#compareOp).
+
 ### Micro management (Strategic Numbers)
 Strategic number říkají AI, jak se chovat na nejzákladnější úrovni. Jsou převážně používány k přidělování vesničanů k různým zdrojům:
 
@@ -293,28 +295,8 @@ Tenhle příklad bude však vyžadovat budovu univerzity.
 Seznam technologií a jejich budov je uveden v [tabulkách](AoEIIDE.md).
 
 #### Jednotky (Units)
-Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které jednotky:
+Ve hře je několik různých jednotek a jsou pro ně potřeba různé budovy. Následující tabulka ukazuje, které budovy jsou potřeba pro které [jednotky](AoEIIDE.md#jednotky).
 
-| jednotka | kasárna | od doby |
-| --- | --- | --- |
-`militiaman-line`   | `barracks`       | 1
-`spearman-line`     | `barracks`       | 2
-`archer-line`       | `archery-range`  | 2
-`skirmisher-line`   | `archery-range`  | 2
-`cavalry-archer-line`   | `archery-range`  | 3
-`scout-cavalry-line`    | `stable`     | 2
-`knight-line`       | `stable`         | 3
-`monk`              | `monastery`      | 3
-`battering-ram-line`    | `siege-workshop` | 2
-`scorpion-line`     | `siege-workshop` | 3
-`mangonel-line`     | `siege-workshop` | 3
-`bombard-cannon-line`   | `siege-workshop` | 4
-`petard`            | `castle`         | 3
-`ratha-ranged-line` | `castle`         | 3
-`longbowman-line`   | `castle`         | 3
-`trebuchet`         | `castle`         | 4
-
-Ceny jednotlivých jednotek jsou uvedeny na [webu](https://www.unitstatistics.com/age-of-empires2/).
 
 #### Výcvik (Training)
 ![train](assets/im-a-train.jpg)
@@ -330,7 +312,7 @@ Výcvik jednotek je velmi podobný stavění budov. Můžeme použít podmínku 
 ```
 
 #### Boj (Attack)
-
+Nastavení typu útoku lze pomocí [AttackStance](AoEIIDE.md#attackstance). Například, pokud chceme, aby naše AI zaútočila, když má 5 nebo více vojáků, můžeme použít následující pravidlo:
 ``` LISP
 (defrule
     (military-population g:>= 5)
@@ -340,13 +322,6 @@ Výcvik jednotek je velmi podobný stavění budov. Můžeme použít podmínku 
     (disable-self)
 )
 ```
-
-ID	| Name	| Description
---- | --- | ---
--1	| -1	| Bez nastavení útoku.
-0	| `stance-aggressive`	| Agresivní postoj. Jednotky budou útočit na všechny nepřátelské objekty ve svém zorném poli a pronásledovat je.
-1	| `stance-defensive`	| Obranný postoj. Jednotky budou útočit na většinu nepřátelských objektů ve svém zorném poli, ale vrátí se na své původní místo, pokud nepřátelské objekty opustí oblast.
-2	| `stance-stand-ground`	| Postoj na místě. Jednotky budou útočit pouze na nepřátelské objekty, pokud mohou útočit na jednotku z jejího aktuálního umístění.
 
 ### Náhodné číslo
 Pokud chceme vložit do našit návrhů trochu nahodilosti a nepředvídatelnosti, tak můžeme využít náhodná čísla. Náhodná čísla můžeme generovat pomocí akce `generate-random-number`:
@@ -422,6 +397,42 @@ Když chceme, aby naše AI komunikovala každých 30 sekund, můžeme náš př�
 
 **Pozor!** Časovačů lze přidat pouze $50$.
 
+### Stavební spoření (Escrow)
+Někdy budeme chtít, aby si AI na něco ušetřilo. Můžeme ušetřit určitý procento všech příjmů nastavením procenta escrow. AI rozeznává dvě typy skladišť a escrow nám umožnuje rozhodnout jakou měrou do kterého z nich budeme přispívat.
+
+![stonks](assets/stonks.png)
+
+Předpokládejme, že chceme ušetřit 90% všech našich potravin. To znamená, že pokud vesničan shodí 10 potravin, 9 z nich nelze použít, dokud je explicitně neuvolníme, a 1 bude použit jako obvykle.
+
+Pro nastavení procenta escrow můžeme použít následující akci:
+
+`(set-escrow-percentage food 90)`
+
+A k uvolnění našetřených zásob:
+
+`(release-escrow food)`
+
+Tento příkaz vše, co jsme ušetřili, a hodí to do společného zdroje. Kombinací těchto funkcí  získáme způsob, jak trénovat/stavět/zkoumat při nedostatku surovin:
+
+``` LISP
+(defrule
+    (game-time >= 900)
+    (building-type-count-total barrracks == 0)
+=>
+    (set-escrow-percentage wood 100)
+)
+
+(defrule
+    (can-build-with-escrow barracks)
+=>
+    (release-escrow wood)
+    (set-escrow-percentage wood 0)
+    (build barracks)
+)
+```
+
+To nám umožňuje ušetřit na kasárny, pokud je nemáme do 15 minuty. `can-build-with-escrow`, `can-train-with-escrow` nebo podobného funkce přidají escrowed částky k neescrowed částkám k při ověření dostupnosti.
+
 ## Přidání AI scriptu do hry
 ![AI_ifff](assets/AI_ifff.jpg)
 
@@ -453,7 +464,13 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 - [basic.ai](./src/basic.ai)
 - [basic.per](./src/basic.per)
 
-### Vzorové kódu pro armádu
+### Další vzorové kódy
+
+- Seznam konstant: [constants.per](./src/MyLib/constants.per).
+- Stavění budov: [construction.per](./src/MyLib/construction.per).
+- Generické časovače: [timers.per](./src/MyLib/timers.per).
+
+#### Pro armádu
 - Příklad verbování armády podle obtížnosti [army_training.per](./src/MyLib/army_training_simple.per).
 - Příklad útoku na nepřítele s časováním [attack.per](./src/MyLib/attack_enemy.per).
   - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
@@ -461,9 +478,9 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 ### Nahrání dílčích personalit
 Můžete načíst soubory osobnosti z dalších souborů. To však nejde použít v pravidlech.
 ``` LISP
-(load "persons\dark-age")
+(load "MyLib\dark-age")
 ```
-(Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *persons*)
+(Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *MyLib*)
 
 ## Vy toho chcete víc?
 

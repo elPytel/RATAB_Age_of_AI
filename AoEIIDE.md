@@ -1,5 +1,37 @@
 # Age of Empires II Definitive Edition
 
+## Armáda
+
+### Jednotky
+| jednotka | kasárna | od doby |
+| --- | --- | --- |
+`militiaman-line`   | `barracks`       | 1
+`spearman-line`     | `barracks`       | 2
+`archer-line`       | `archery-range`  | 2
+`skirmisher-line`   | `archery-range`  | 2
+`cavalry-archer-line`   | `archery-range`  | 3
+`scout-cavalry-line`    | `stable`     | 2
+`knight-line`       | `stable`         | 3
+`monk`              | `monastery`      | 3
+`battering-ram-line`    | `siege-workshop` | 2
+`scorpion-line`     | `siege-workshop` | 3
+`mangonel-line`     | `siege-workshop` | 3
+`bombard-cannon-line`   | `siege-workshop` | 4
+`petard`            | `castle`         | 3
+`ratha-ranged-line` | `castle`         | 3
+`longbowman-line`   | `castle`         | 3
+`trebuchet`         | `castle`         | 4
+
+Ceny jednotlivých jednotek jsou uvedeny na [webu](https://www.unitstatistics.com/age-of-empires2/).
+
+### AttackStance
+
+ID	| Name	| Description
+--- | --- | ---
+-1	| -1	| Bez nastavení útoku.
+0	| `stance-aggressive`	| Agresivní postoj. Jednotky budou útočit na všechny nepřátelské objekty ve svém zorném poli a pronásledovat je.
+1	| `stance-defensive`	| Obranný postoj. Jednotky budou útočit na většinu nepřátelských objektů ve svém zorném poli, ale vrátí se na své původní místo, pokud nepřátelské objekty opustí oblast.
+2	| `stance-stand-ground`	| Postoj na místě. Jednotky budou útočit pouze na nepřátelské objekty, pokud mohou útočit na jednotku z jejího aktuálního umístění.
 
 ## Jednotlivé věky
 
