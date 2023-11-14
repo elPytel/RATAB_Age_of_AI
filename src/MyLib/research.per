@@ -1,0 +1,981 @@
+;-----Advance age-----
+(defrule
+	(up-compare-goal villager-count g:>= desired-ageup-villagers)
+	(current-age g:< desired-age)
+	(can-research feudal-age)
+=>
+	(release-escrow food)
+	(research feudal-age)
+)
+
+(defrule
+	(up-compare-goal villager-count g:>= desired-ageup-villagers)
+	(current-age g:< desired-age)
+	(can-research castle-age)
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(research castle-age)
+)
+(defrule
+	(up-compare-goal villager-count g:>= desired-ageup-villagers)
+	(current-age g:< desired-age)
+	(can-research imperial-age)
+=>
+	(release-escrow food)
+	(release-escrow gold)
+	(research imperial-age)
+)
+
+;UNIT UPGRADES
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count militiaman > 3)
+	(can-research ri-man-at-arms)
+=>
+	(research ri-man-at-arms)
+	(chat-local-to-self "research man-at-arms")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count eagle-warrior > 3)
+	(can-research ri-elite-eagle-warrior)
+=>
+	(research ri-elite-eagle-warrior)
+	(chat-local-to-self "research elite eagle warrior")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count man-at-arms > 6)
+	(can-research ri-long-swordsman)
+=>
+    (research ri-long-swordsman)
+	(chat-local-to-self "research long swordsman ")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count long-swordsman > 6)
+	(can-research ri-two-handed-swordsman)
+=>
+    (research ri-two-handed-swordsman)
+	(chat-local-to-self "research two-handed-swordsman")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count two-handed-swordsman > 6)
+	(can-research ri-champion)
+=>
+    (research ri-champion)
+	(chat-local-to-self "research champion")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total spearman > 2)
+	(can-research ri-pikeman)
+=>
+    (research ri-pikeman)
+	(chat-local-to-self "research pike")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total pikeman > 2)
+	(can-research ri-halberdier)
+=>
+    (research ri-halberdier)
+	(chat-local-to-self "research halberd")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total scout-cavalry > 2)
+	(can-research ri-light-cavalry)
+=>
+	(research ri-light-cavalry)
+	(chat-local-to-self "research light-cavalry")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total light-cavalry > 3)
+	(can-research ri-hussar)
+=>
+	(research ri-hussar)
+	(chat-local-to-self "research hussar")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total camel > 2)
+	(can-research ri-heavy-camel)
+=>
+    (research ri-heavy-camel)
+	(chat-local-to-self "research heavy camel")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count-total knight > 2)
+	(can-research ri-cavalier)
+=>
+    (research ri-cavalier)
+	(chat-local-to-self "research cavalier")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count-total cavalier > 2)
+	(can-research ri-paladin)
+=>
+    (research ri-paladin)
+	(chat-local-to-self "research paladin")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count-total battle-elephant > 2)
+	(can-research ri-elite-battle-elephant)
+=>
+    (research ri-elite-battle-elephant)
+	(chat-local-to-self "research elite-battle-elephant")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count-total steppe-lancer > 2)
+	(can-research ri-elite-steppe-lancer)
+=>
+    (research ri-elite-steppe-lancer)
+	(chat-local-to-self "research elite-steppe-lancer")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count archer > 4)
+	(can-research ri-crossbow)
+=>
+    (research ri-crossbow)
+	(chat-local-to-self "research crossbow")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count crossbowman > 5)
+	(can-research ri-arbalest)
+=>
+    (research ri-arbalest)
+	(chat-local-to-self "research arbalest")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count cavalry-archer > 6)
+	(can-research ri-heavy-cavalry-archer)
+=>
+    (research ri-heavy-cavalry-archer)
+	(chat-local-to-self "research heavy-cavalry-archer")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total skirmisher > 2)
+	(can-research ri-elite-skirmisher)
+=>
+    (research ri-elite-skirmisher)
+	(chat-local-to-self "research elite skirmisher")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count-total genitour > 2)
+	(can-research ri-elite-genitour)
+=>
+    (research ri-elite-genitour)
+	(chat-local-to-self "research elite genitour")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count scorpion > 4)
+	(can-research ri-heavy-scorpion)
+=>
+    (research ri-heavy-scorpion)
+	(chat-local-to-self "research heavy-scorpion")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count battering-ram > 2)
+	(can-research ri-capped-ram)
+=>
+    (research ri-capped-ram)
+	(chat-local-to-self "research capped ram")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count capped-ram > 2)
+	(can-research ri-siege-ram)
+=>
+    (research ri-siege-ram)
+	(chat-local-to-self "research siege-ram")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+	(unit-type-count mangonel > 3)
+	(can-research ri-onager)
+=>
+      (research ri-onager)
+	(chat-local-to-self "research onager")
+)
+
+(defrule
+	(goal upgrade-military-lines 1)
+    (unit-type-count onager > 3)
+	(can-research ri-siege-onager)
+=>
+    (research ri-siege-onager)
+	(chat-local-to-self "research siege onager")
+)
+
+;DOCK UNITS
+(defrule
+	(goal upgrade-navy 1)
+(or	(unit-type-count-total demolition-raft > 2)
+(or	(unit-type-count-total fire-galley > 2)
+	(unit-type-count galley > 2)))
+	(can-research ri-war-galley)
+=>
+    (research ri-war-galley)
+	(chat-local-to-self "research war-galley")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(unit-type-count war-galley > 2)
+	(can-research ri-galleon)
+=>
+    (research ri-galleon)
+	(chat-local-to-self "research galleon")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(or
+		(unit-type-count galleon > 2)
+		(unit-type-count war-galley > 2)
+	)
+	(can-research ri-cannon-galleon)
+=>
+    (research ri-cannon-galleon)
+	(chat-local-to-self "research cannon-galleon")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(unit-type-count-total fire-ship > 1)
+	(can-research ri-fast-fire-ship)
+=>
+    (research ri-fast-fire-ship)
+	(chat-local-to-self "research fast-fire-ship")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(unit-type-count demolition-ship > 2)
+	(can-research ri-heavy-demolition-ship)
+=>
+    (research ri-heavy-demolition-ship)
+	(chat-local-to-self "research heavy-demolition-ship")
+)
+
+; ////////////////////////WEAPONS/////////////////////////////////////////////////
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(can-research ri-forging)
+=>
+     (research ri-forging)
+	(chat-local-to-self "research forging")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(can-research ri-iron-casting)
+=>
+	(research ri-iron-casting)
+	(chat-local-to-self "research iron-casting")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(can-research ri-blast-furnace)
+=>
+	(research ri-blast-furnace)
+	(chat-local-to-self "research blast-furnace")
+)
+
+;ARCHER UPGRADES -- cost food/gold
+(defrule
+	(goal upgrade-military-smith 1)
+	(can-research ri-fletching)
+=>
+	(research ri-fletching)
+	(chat-local-to-self "research fletching")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(can-research ri-bodkin-arrow)
+=>
+	(research ri-bodkin-arrow)
+	(chat-local-to-self "research bodkin-arrow")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(can-research ri-bracer)
+=>
+	(research ri-bracer)
+	(chat-local-to-self "research bracer")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count cavalry-archer-class > 3)
+	(can-research ri-parthian-tactics)
+=>
+	(research ri-parthian-tactics)
+	(chat-local-to-self "research parthian tactics")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(or
+		(unit-type-count archery-class > 3)
+		(unit-type-count cavalry-archer-class > 3)
+	)
+	(can-research ri-thumb-ring)
+=>
+	(research ri-thumb-ring)
+	(chat-local-to-self "research thumb ring")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(or
+		(unit-type-count archery-class > 3)
+		(or
+			(unit-type-count cavalry-archer-class > 3)
+			(or
+				(unit-type-count archery-cannon-class > 3)
+				(unit-type-count cavalry-cannon-class > 3)
+			)
+		)
+	)
+	(can-research ri-padded-archer-armor)
+=>
+	(research ri-padded-archer-armor)
+	(chat-local-to-self "research padded-archer-armor")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(or
+		(unit-type-count archery-class > 3)
+		(or
+			(unit-type-count cavalry-archer-class > 3)
+			(or
+				(unit-type-count archery-cannon-class > 3)
+				(unit-type-count cavalry-cannon-class > 3)
+			)
+		)
+	)
+	(can-research ri-leather-archer-armor)
+=>
+	(research ri-leather-archer-armor)
+	(chat-local-to-self "research leather-archer-armor")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(or
+		(unit-type-count archery-class > 3)
+		(or
+			(unit-type-count cavalry-archer-class > 3)
+			(or
+				(unit-type-count archery-cannon-class > 3)
+				(unit-type-count cavalry-cannon-class > 3)
+			)
+		)
+	)
+	(can-research ri-ring-archer-armor)
+=>
+	(research ri-ring-archer-armor)
+	(chat-local-to-self "research ring-archer-armor")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count infantry-class > 3)
+	(can-research ri-scale-mail)
+=>
+	(research ri-scale-mail)
+	(chat-local-to-self "research scale-mail")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count infantry-class > 3)
+	(can-research ri-chain-mail)
+=>
+	(research ri-chain-mail)
+	(chat-local-to-self "research chain-mail")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count infantry-class > 3)
+	(can-research ri-plate-mail)
+=>
+	(research ri-plate-mail)
+	(chat-local-to-self "research plate-mail")
+)
+
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(unit-type-count infantry-class > 3)
+	(can-research ri-tracking)
+=>
+	(research ri-tracking)
+	(chat-local-to-self "research tracking")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(unit-type-count infantry-class > 3)
+	(can-research ri-squires)
+=>
+	(research ri-squires)
+	(chat-local-to-self "research squires")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(unit-type-count infantry-class > 3)
+	(can-research ri-arson)
+=>
+	(research ri-arson)
+	(chat-local-to-self "research arson")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(or
+		(unit-type-count cavalry-class > 3)
+		(or
+			(unit-type-count cavalry-archer-class > 3)
+			(unit-type-count cavalry-cannon-class > 3)
+		)
+	)
+	(can-research ri-bloodlines)
+=>
+	(research ri-bloodlines)
+	(chat-local-to-self "research bloodlines")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count cavalry-class > 3)
+	(can-research ri-scale-barding)
+=>
+	(research ri-scale-barding)
+	(chat-local-to-self "research scale-barding")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count cavalry-class > 3)
+	(can-research ri-chain-barding)
+=>
+	(research ri-chain-barding)
+	(chat-local-to-self "research chain-barding")
+)
+
+(defrule
+	(goal upgrade-military-smith 1)
+	(unit-type-count cavalry-class > 3)
+	(can-research ri-plate-barding)
+=>
+	(research ri-plate-barding)
+	(chat-local-to-self "research plate-barding")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(or
+		(unit-type-count cavalry-class > 3)
+		(or
+			(unit-type-count cavalry-archer-class > 3)
+			(unit-type-count cavalry-cannon-class > 3)
+		)
+	)
+	(can-research ri-husbandry)
+=>
+	(research ri-husbandry)
+	(chat-local-to-self "research husbandry")
+)
+
+; /////////////////////SIEGE RESEARCH ITEMS///////////////////////////
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research ri-siege-engineers)
+=>
+	(research ri-siege-engineers)
+	(chat-local-to-self "research siege-engineers")
+)
+
+;FORTRESS UPGRADES
+(defrule
+	(goal upgrade-fortifications 1)
+	(can-research ri-hoardings)
+=>
+	(research ri-hoardings)
+	(chat-local-to-self "research hoardings")
+)
+
+;SHIPS
+(defrule
+	(goal upgrade-navy 1)
+	(unit-type-count cannon-galleon > 2)
+	(can-research ri-deck-guns)
+=>
+	(research ri-deck-guns)
+	(chat-local-to-self "research deck guns ")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(or
+		(unit-type-count transport-ship > 0)
+		(unit-type-count warship-class > 2)
+	)
+	(can-research ri-careening)
+=>
+	(research ri-careening)
+	(chat-local-to-self "research careening ")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(or
+		(unit-type-count transport-ship > 0)
+		(unit-type-count warship-class > 2)
+	)
+	(can-research ri-dry-dock)
+=>
+	(research ri-dry-dock)
+	(chat-local-to-self "research dry-dock ")
+)
+
+(defrule
+	(goal upgrade-navy 1)
+	(unit-type-count warship-class > 2)
+	(can-research ri-shipwright)
+=>
+	(research ri-shipwright)
+	(chat-local-to-self "research shipwright ")
+)
+
+;OTHER RESEARCH ITEMS
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research ri-ballistics)
+=>
+	(research ri-ballistics)
+	(chat-local-to-self "research ballistics ")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research ri-chemistry)
+=>
+	(research ri-chemistry)
+	(chat-local-to-self "research chemistry ")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research ri-conscription)
+=>
+	(research ri-conscription)
+	(chat-local-to-self "research conscription")
+)
+;P3 items
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research ri-elite-elephant-archer)
+	(unit-type-count-total elephant-archer-line > 0)
+=>
+	(research ri-elite-elephant-archer)
+	(chat-local-to-self "research elite elephant archer")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research 843)
+	(or(unit-type-count-total 1751 > 0);shrivashma-rider-line doesn't seem to work yet 
+	(unit-type-count-total 1753 > 0))
+=>
+	(research 843)
+	(chat-local-to-self "research elite shrivashma")
+)
+
+(defrule
+	(goal upgrade-military-generic 1)
+	(can-research ri-elite-armored-elephant)
+	(unit-type-count-total armored-elephant-line > 0)
+=>
+	(research ri-elite-armored-elephant)
+	(chat-local-to-self "research elite armored elephant")
+)
+
+; //////////////////////ECONOMIC/////////////////////////////
+
+;mining-camp items
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-gold-mining)
+=>
+	(research ri-gold-mining)
+	(chat-local-to-self "research gold mining")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-gold-shaft-mining)
+=>
+	(research ri-gold-shaft-mining)
+	(chat-local-to-self "research gold shaft mining")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(building-type-count mining-camp > 1)
+	(can-research ri-stone-mining)
+=>
+	(research ri-stone-mining)
+	(chat-local-to-self "research stone mining")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(building-type-count mining-camp > 1)
+	(can-research ri-stone-shaft-mining)
+=>
+	(research ri-stone-shaft-mining)
+	(chat-local-to-self "research stone shaft mining")
+)
+
+;mill items
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-horse-collar)
+=>
+	(research ri-horse-collar)
+	(chat-local-to-self "research horse collar")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-heavy-plow)
+=>
+	(research ri-heavy-plow)
+	(chat-local-to-self "research heavy plow")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-crop-rotation)
+=>
+	(research ri-crop-rotation)
+	(chat-local-to-self "research crop rotation")
+)
+
+;saw mill
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-double-bit-axe)
+=>
+	(research ri-double-bit-axe)
+	(chat-local-to-self "research double bit axe")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-bow-saw)
+=>
+	(research ri-bow-saw)
+	(chat-local-to-self "research bow saw")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-two-man-saw)
+=>
+	(research ri-two-man-saw)
+	(chat-local-to-self "research 2 man saw")
+)
+
+;university stuff
+(defrule
+	(goal upgrade-fortifications 1)
+	(can-research ri-masonry)
+=>
+	(research ri-masonry)
+	(chat-local-to-self "research masonry")
+)
+
+(defrule
+	(goal upgrade-fortifications 1)
+	(can-research ri-architecture)
+=>
+	(research ri-architecture)
+	(chat-local-to-self "research architecture")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(can-research ri-stonecutting)
+=>
+	(research ri-stonecutting)
+	(chat-local-to-self "research stonecutting")
+)
+
+;market & town center
+(defrule
+	(goal upgrade-economy 1)
+	(or
+		(unit-type-count-total trade-cart > 1)
+		(unit-type-count-total trade-cog > 1)
+	)
+	(can-research ri-caravan)
+=>
+	(research ri-caravan)
+	(chat-local-to-self "caravan")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-guilds)
+=>
+	(research ri-guilds)
+	(chat-local-to-self "research guilds")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-loom)
+=>
+	(research ri-loom)
+	(chat-local-to-self "research loom")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-hand-cart)
+=>
+	(research ri-hand-cart)
+	(chat-local-to-self "research hand-cart")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(can-research ri-wheel-barrow)
+=>
+	(research ri-wheel-barrow)
+	(chat-local-to-self "research wheelbarrow")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(or
+		(players-stance any-computer ally)
+		(players-stance any-human ally)
+	)
+	(can-research ri-coinage)
+=>
+	(research ri-coinage)
+	(chat-local-to-self "research coinage")
+)
+
+(defrule
+	(goal upgrade-economy 1)
+	(or
+		(players-stance any-computer ally)
+		(players-stance any-human ally)
+	)
+	(can-research ri-banking)
+=>
+	(research ri-banking)
+	(chat-local-to-self "research banking")
+)
+
+; ////////////////////MONK/////////////////
+(defrule
+	(goal upgrade-other 1)
+	(or
+		(cc-players-unit-type-count any-enemy monk > 1)
+        (unit-type-count-total war-elephant-line > 2)
+	)
+	(can-research ri-faith)
+=>
+	(research ri-faith)
+	(chat-local-to-self "research faith")
+)
+
+(defrule
+	(difficulty <= moderate)
+	(goal upgrade-other 1)
+	(cc-players-unit-type-count any-enemy monk > 1)
+	(can-research ri-heresy)
+=>
+	(research ri-heresy)
+	(chat-local-to-self "research heresy")
+)
+
+(defrule
+	(goal upgrade-other 1)
+    (cc-players-unit-type-count any-enemy monk > 2)
+	(can-research ri-atonement)
+=>
+	(research ri-atonement)
+	(chat-local-to-self "research atonement")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(unit-type-count-total monk > 2)
+	(can-research ri-block-printing)
+=>
+	(research ri-block-printing)
+	(chat-local-to-self "research block printing")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(unit-type-count-total monk > 2)
+	(can-research ri-illumination)
+=>
+	(research ri-illumination)
+	(chat-local-to-self "research illumination")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(unit-type-count-total monk > 2)
+	(can-research ri-fervor)
+=>
+	(research ri-fervor)
+	(chat-local-to-self "research fervor")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(unit-type-count-total monk > 2)
+	(can-research ri-redemption)
+=>
+	(research ri-redemption)
+	(chat-local-to-self "research redemption")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(unit-type-count-total monk > 2)
+	(can-research ri-sanctity)
+=>
+	(research ri-sanctity)
+	(chat-local-to-self "research sanctity")
+)
+
+(defrule
+	(goal upgrade-other 1)
+	(unit-type-count-total monk > 3)
+	(can-research ri-theocracy)
+=>
+	(research ri-theocracy)
+	(chat-local-to-self "research theocracy")
+)
+
+
+;TOWERS & WALLS
+
+(defrule
+	(goal upgrade-fortifications 1)
+	(building-type-count-total watch-tower > 1)
+	(can-research ri-guard-tower)
+=>
+    (research ri-guard-tower)
+	(chat-local-to-self "research guard tower")
+)
+
+(defrule
+	(goal upgrade-fortifications 1)
+	(building-type-count-total guard-tower > 1)
+	(can-research ri-keep)
+=>
+    (research ri-keep)
+	(chat-local-to-self "research keep")
+)
+
+(defrule
+	(goal upgrade-fortifications 1)
+	(research-available ri-bombard-tower)
+	(can-research ri-bombard-tower)
+=>
+    (research ri-bombard-tower)
+	(chat-local-to-self "research bombard-tower")
+)
+
+(defrule
+	(goal upgrade-fortifications 1)
+(or	(building-type-count-total watch-tower > 3)
+	(building-type-count-total castle > 3))
+	(can-research ri-heated-shot)
+=>
+     (research ri-heated-shot)
+	(chat-local-to-self "research heated-shot")
+)
+
+(defrule
+	(goal upgrade-fortifications 1)
+	(or
+		(building-type-count-total castle > 0)
+		(building-type-count-total watch-tower > 2)
+	)
+	(can-research ri-murder-holes)
+=>
+	(research ri-murder-holes)
+	(chat-local-to-self "research murder-holes")
+)
+
+(defrule
+	(goal upgrade-fortifications 1)
+	(or
+		(building-type-count-total gate > 0)
+		(building-type-count-total stone-wall-line > 2)
+	)
+	(can-research ri-fortified-wall)
+=>
+	(research ri-fortified-wall)
+	(chat-local-to-self "research fortifications")
+)

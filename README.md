@@ -11,7 +11,7 @@ Pojď si zahrát legendární strategii Age of Empires II, naučit se základy p
 ### Nákup hry
 Následující návod využívá Steam, což je aplikace pro nákup her. Pokud chcete koupit hru jiným způsobem, určitě to není problém, akorát vám pro to neposkytneme návod.
 1. Stáhněte si [Steam](https://store.steampowered.com/) a vytvořte si účet.
-2. Kupte si a nainstalujte Age of Empires II: Definitive Edition [dze](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/). 
+2. Kupte si a nainstalujte Age of Empires II: Definitive Edition [zde](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/). 
 
 ## Scriptování AI
 ![AI](assets/AI.jpg)
@@ -515,17 +515,18 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 - [basic.ai](./src/basic.ai)
 - [basic.per](./src/basic.per)
 
-### Další vzorové kódy
+### Další obecné vzorové kódy
 
 - Seznam konstant: [constants.per](./src/MyLib/constants.per).
 - Stavění budov: [construction.per](./src/MyLib/construction.per).
   - `gl-villager-count-*` musí mít nastavený požadovaný počet vesničanů v daném věku.
 - Postup do další doby: [age_up.per](./src/MyLib/age_up.per).
+- Upgrade technologií: [research.per](./src/MyLib/research.per).
 - Generické časovače: [timers.per](./src/MyLib/timers.per).
 
 **Pozor!** Pro správné fungování striptu *timers.per* je potřeba jej vložit až na konec souboru *mojeAI.per*.
 
-Vzor pro použití *construction.per*:
+#### Vzor pro použití *construction.per*:
 ``` LISP
 (defrule
     (current-age == feudal-age)
@@ -536,10 +537,31 @@ Vzor pro použití *construction.per*:
     (disable-self)
 )
 ```
-Totot pravidlo říká, že pokud je aktuální věk feudal age, tak AI bude chtít postavit 2 farmy, 1 kasárna a 1 lukostřelnici (samotné stavění je však řízeno pravidlem *construction.per*).
+Toto pravidlo říká, že pokud je aktuální věk feudal age, tak AI bude chtít postavit 2 farmy, 1 kasárna a 1 lukostřelnici (samotné stavění je však řízeno pravidlem *construction.per*).
 
+#### Vzor pro použití *research.per*:
+``` LISP
+(defrule
+    (true)
+=>
+    (set-goal gl-upgrade-military-generic yes)
+    (set-goal gl-upgrade-military-lines yes)
+    (set-goal gl-upgrade-military-smith yes)
+    (set-goal gl-upgrade-fortifications yes)
+    (set-goal gl-upgrade-economy yes)
+    (set-goal gl-upgrade-other yes)
+    (chat-local-to-self "Upgrades enabled")
+    (disable-self)
+)
+```
+Nastavní daného cíle na `yes` způsobí, že se AI bude snažit vylepšit odpovídající jednotky, budovy a technologie, tak aby to odpovídalo dané situaci ve hře:
+- térnuji kopidníky => vylepšení kopí
+- stavím věže => vylepšení obraných budov
+- vyrábím vesničany => vylepšení ekonomiky
 
-Vzor pro použití *timers.per*:
+Vylepšování se provede při nejbližší příležitosti, kdy bude AI mít dostatek surovin.
+
+#### Vzor pro použití *timers.per*:
 ``` LISP
 (defrule
     (timer-triggered tm-10s); kazdych 10 sekund
@@ -549,13 +571,15 @@ Vzor pro použití *timers.per*:
 )
 ```
 
-#### Pro armádu
+### Vzorové kódy pro armádu
+![army](assets/Army,%20Hulk,%20jar%20of%20dirt.jpg)
+
 - Příklad verbování armády podle obtížnosti [army_training.per](./src/MyLib/army_training_simple.per).
 - Příklad verbování armády podle konfigurace [army_training.per](./src/MyLib/army_training.per).
 - Příklad útoku na nepřítele s časováním [attack.per](./src/MyLib/attack_enemy.per).
   - V tomto kódu bude AI pomocí metody attack-groups čekat 20 až 40 sekund a poté na 20 sekund zaútočí.
 
-Konfigurace ovladajici script *army_training.per*:
+#### Konfigurace ovladajici script *army_training.per*:
 ``` LISP	
 (defrule
     (current-age >= imperial-age)
@@ -615,11 +639,13 @@ Konfigurace ovladajici script *army_training.per*:
 Tato konfigurace nastaví v jaké době a jakou armádu bude AI vytvářet. V tomto případě bude AI vytvářet armádu až po dosažení imperial age a bude se snažit mít 100 jednotek od povolených typů.
 
 ### Nahrání dílčích personalit
-Můžete načíst soubory osobnosti z dalších souborů. To však nejde použít v pravidlech.
+Můžete načíst soubory "osobnosti" (prostě knihoven, vašich dílčích kusů kódu) z dalších souborů. 
 ``` LISP
 (load "MyLib\dark-age")
 ```
 (Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *MyLib*)
+
+**Pozor!** To však nelze použít v pravidlech!
 
 ## Vy toho chcete víc?
 
