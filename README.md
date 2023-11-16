@@ -13,6 +13,13 @@ Následující návod využívá Steam, což je aplikace pro nákup her. Pokud c
 1. Stáhněte si [Steam](https://store.steampowered.com/) a vytvořte si účet.
 2. Kupte si a nainstalujte Age of Empires II: Definitive Edition [zde](https://store.steampowered.com/app/813780/Age_of_Empires_II_Definitive_Edition/). 
 
+### Stažení hry zdarma
+Následující návod popisuje stažení AoE2DE zdarma. Hra byla spuštěna a otestována.
+1. Přejděte na https://drive.google.com/drive/u/0/folders/1WKGA7OnnRUz7ya-XofJ8zOaSWMMdijAL a zde si stáhněte všechny soubory.
+2. Po stažení spusťte setup.exe a měl by se spustit instalátor
+3. V instalátoru si vyberte, kam chcete hru nainstalovat a jaké chcete jméno hráče. Následně se hra začne instalovat (toto může chvíli trvat)
+4. Pokud po instalaci nemáte na ploše zástupce, hru spustíte souborem AoE2DE_s.exe ve složce s hrou.
+
 ## Scriptování AI
 ![AI](assets/AI.jpg)
 
@@ -492,6 +499,7 @@ Nyní jste pravděpodobně netrpěliví, abyste své pravidlo chování otestova
 Zde je potřeba přejít do adresáře ze kterého Age of Empires 2 čte AI. Záleží jak jste hru instalovali:
 - Pokud jste použili Steam, tak je to ***My Computer/Local Disk (C)/Program Files/Steam/steamapps/common/Age2DE/resources/_common/ai***. 
 - Pokud jste použili CD, tak je to ***My Computer/Local Disk (C)/Program Files/Microsoft Games/Age of Empires II/AI/***.
+- Pokud jste stáhli hru z Google Disku, tak je to ***(složka s hrou)/resources/_common/ai***
 
 Všechny AI jsou uloženy ve složce AI a tak do této složky uložte svou AI. 
 
