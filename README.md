@@ -15,10 +15,10 @@ Následující návod využívá Steam, což je aplikace pro nákup her. Pokud c
 
 ### Stažení hry zdarma
 Následující návod popisuje stažení AoE2DE zdarma. Hra byla spuštěna a otestována.
-1. Přejděte na https://drive.google.com/drive/u/0/folders/1WKGA7OnnRUz7ya-XofJ8zOaSWMMdijAL a zde si stáhněte všechny soubory.
-2. Po stažení spusťte setup.exe a měl by se spustit instalátor
-3. V instalátoru si vyberte, kam chcete hru nainstalovat a jaké chcete jméno hráče. Následně se hra začne instalovat (toto může chvíli trvat)
-4. Pokud po instalaci nemáte na ploše zástupce, hru spustíte souborem AoE2DE_s.exe ve složce s hrou.
+1. Přejděte na Gdisk a [zde]((https://drive.google.com/drive/u/0/folders/1WKGA7OnnRUz7ya-XofJ8zOaSWMMdijAL)) si stáhněte všechny soubory.
+2. Po stažení spusťte **setup.exe** a měl by se spustit instalátor.
+3. V instalátoru si vyberte, kam chcete hru nainstalovat a jaké chcete jméno hráče. Následně se hra začne instalovat (toto může chvíli trvat).
+4. Pokud po instalaci nemáte na ploše zástupce, hru spustíte souborem **AoE2DE_s.exe** ve složce s hrou.
 
 ## Scriptování AI
 ![AI](assets/AI.jpg)
@@ -666,3 +666,4 @@ Můžete načíst soubory "osobnosti" (prostě knihoven, vašich dílčích kus�
 - [A guide to scripting your own AI for AOEII HD](https://steamcommunity.com/sharedfiles/filedetails/?id=1238296169)
 - [AI Scripting Encyclopedia](https://airef.github.io/)
 - [YouTube : aoe2 ai scripting tutorial](https://www.youtube.com/playlist?list=PL8UM8VqZhE0tRwdn-uvTUSvugUOArNc_j)
+- [Age of empires II AI Scripting](https://gist.github.com/Andygmb/1e3a6d9d444b2dfa8c40)

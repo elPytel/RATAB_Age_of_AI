@@ -35,6 +35,9 @@ BuildingId: [wiki](https://airef.github.io/tables/objects.html)
 
 ## Uprava AI scriptů
 
+### Boj
+https://airef.github.io/commands/commands-details.html#up-retreat-to
+
 ### Jak chytat ryby?
 
 ### Jak progresivně zvyšovat počet budov pro armádu?
