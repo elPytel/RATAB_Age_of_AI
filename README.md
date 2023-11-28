@@ -15,10 +15,13 @@ Následující návod využívá Steam, což je aplikace pro nákup her. Pokud c
 
 ### Stažení hry zdarma
 Následující návod popisuje stažení AoE2DE zdarma. Hra byla spuštěna a otestována.
-1. Přejděte na Gdisk a [zde]((https://drive.google.com/drive/u/0/folders/1WKGA7OnnRUz7ya-XofJ8zOaSWMMdijAL)) si stáhněte všechny soubory.
+1. Přejděte na Gdisk a [zde](https://drive.google.com/drive/u/0/folders/1WKGA7OnnRUz7ya-XofJ8zOaSWMMdijAL) si stáhněte všechny soubory.
 2. Po stažení spusťte **setup.exe** a měl by se spustit instalátor.
 3. V instalátoru si vyberte, kam chcete hru nainstalovat a jaké chcete jméno hráče. Následně se hra začne instalovat (toto může chvíli trvat).
 4. Pokud po instalaci nemáte na ploše zástupce, hru spustíte souborem **AoE2DE_s.exe** ve složce s hrou.
+
+## Programujeme obecně
+Základem všech programovacích jazyků je jejich [syntax](SYNTAX.md). Syntaxe je soubor pravidel, které musíme dodržovat, abychom mohli napsat funkční kód. Pokud se chceme naučit programovat, tak musíme nejdříve pochopit syntaxi daného jazyka.
 
 ## Scriptování AI
 ![AI](assets/AI.jpg)
