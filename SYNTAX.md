@@ -35,7 +35,7 @@ LISP
 ``` lisp
 (defconst konstanta 5)
 ...
-(up-chat-data-to-all "Tohle je moje konstanta: %d" c: promena)
+(up-chat-data-to-all "Tohle je moje konstanta: %d" c: konstanta)
 ```
 
 ## Komentáře
@@ -189,3 +189,6 @@ LISP
     (enable-timer 1 120)
 )
 ```
+
+### Bližší dokumentace
+https://airef.github.io/index.html
