@@ -1,5 +1,17 @@
 # Questions and Answers
 
+## Jak zrychlím hru?
+### Klávesové zkratky
+- `-` - zpomalení
+- `=/+` - zrychlení
+
+Lze přenastavit v nastavení hry:
+- Option -> Hotkeys -> Speed Up/Down
+
+### Steam
+Zrychlení x4 a x8 je dostupné v nastavení hry [dle](https://www.youtube.com/watch?v=jGaaQ6FmxiU):
+- Steam -> Library -> Right click on game -> Properties -> Set Launch Options -> `DEBUGSPEED`
+
 ## Užitečne kusy kódu
 
 ### up-build
