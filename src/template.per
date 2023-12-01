@@ -1,0 +1,210 @@
+; IMPORTS ============================================
+
+; general
+(load "MyLib\constants")
+(load "MyLib\construction")
+(load "MyLib\research")
+; army
+(load "MyLib\army_training")
+; ages
+(load "MyLib\age-up")
+; base AI
+;(load "base")
+
+;TABLE ===============================================
+
+;militiaman-line	barracks	1
+;spearman-line	barracks	2
+;archer-line	archery-range	2
+;skirmisher-line	archery-range	2
+;cavalry-archer-line	archery-range	3
+
+;scout-cavalry-line	stable	2
+;knight-line	stable	3
+;monk	monastery	3
+
+;battering-ram-line	siege-workshop	2
+;scorpion-line	siege-workshop	3
+;mangonel-line    siege-workshop	3
+;bombard-cannon-line	siege-workshop	4
+
+;longbowman-line	castle	3
+;trebuchet	castle	4
+
+; INIT ===============================================
+(defrule
+    (true)
+=>
+    (set-goal desired-ageup-villagers 130)
+    (set-goal desired-age imperial-age)
+    (disable-self)
+)
+
+; MICRO MANAGING =======================================
+
+; STRATEGIC NUMBERS ====================================
+
+(defrule ;initial numbers
+    (true)
+=>
+    (set-strategic-number sn-percent-civilian-explorers 0) ;don't scout with villagers
+    (set-strategic-number sn-total-number-explorers 1) ;scout with our scout!
+    (set-strategic-number sn-number-explore-groups 1)
+    (set-strategic-number sn-enable-boar-hunting 1) ;take the boar!
+    (chat-local-to-self "[INFO] Strategic numbers set.")
+    (disable-self)
+)
+
+(defrule
+    (current-age == dark-age)
+=>
+    (set-strategic-number sn-food-gatherer-percentage 85)
+    (set-strategic-number sn-wood-gatherer-percentage 15)
+    (set-strategic-number sn-gold-gatherer-percentage 0)
+    (set-strategic-number sn-stone-gatherer-percentage 0)
+    (disable-self)
+)
+
+; UPGRADES ============================================
+
+(defrule
+    (true)
+=>
+    (set-goal upgrade-military-lines yes)
+    (set-goal upgrade-navy yes)
+    (set-goal upgrade-military-smith yes)
+    (set-goal upgrade-military-generic yes)
+    (set-goal upgrade-fortifications yes)
+    (set-goal upgrade-economy yes)
+    (set-goal upgrade-other yes)
+    (chat-local-to-self "Upgrades enabled")
+    (disable-self)
+)
+    
+; ESCROW =============================================
+(defrule
+    (current-age == feudal-age)
+=>
+    (set-escrow-percentage wood 10)
+    (set-escrow-percentage food 10)
+    (set-escrow-percentage stone 10)
+    (set-escrow-percentage gold 10)
+    (chat-local-to-self "Escrow set.")
+    (disable-self)
+)
+
+; release-escrow
+(defrule
+    (food-amount >= 1000)
+=>
+    (release-escrow food)
+)
+
+(defrule
+    (wood-amount >= 1000)
+=>
+    (release-escrow wood)
+)
+
+(defrule
+    (gold-amount >= 1000)
+=>
+    (release-escrow gold)
+)
+
+(defrule
+    (stone-amount >= 1000)
+=>
+    (release-escrow stone)
+)
+
+
+; UNITS ===============================================
+
+(defrule
+    (civilian-population < 130) ;if we have less than 130 villagers, train a villager.
+    (can-train villager)
+=>
+    (train villager)
+)
+
+; ARMY TRAINING ========================================
+
+(defrule
+    (game-time >= 300)
+=>
+    (set-goal gl-recruit-army yes)
+    (chat-local-to-self "Army training enabled")
+    (disable-self)
+)
+
+(defrule
+    (current-age >= imperial-age)
+=>
+    (set-goal gl-minimum-army-size 50)
+    (set-goal gl-maximum-army-size 200)
+    (disable-self)
+)
+
+(defrule
+	(current-age >= imperial-age)
+=>
+	;barracks
+	(set-goal gl-militia-amount 100)
+	(set-goal gl-spearman-amount 0)
+	;archery-range
+	(set-goal gl-archers-amount 100)
+	(set-goal gl-skirmisher-amount 0)
+	(set-goal gl-cavalry-archer-amount 0)
+	;stable
+	(set-goal gl-scout-cavalry-amount 0)
+	(set-goal gl-knight-amount 0)
+	;monastery
+	(set-goal gl-monk-amount 5)
+	;siege-workshop
+	(set-goal gl-ram-amount 0)
+	(set-goal gl-scorpion-amount 0)
+	(set-goal gl-mangonel-amount 10)
+	(set-goal gl-bombard-cannon-amount 0)
+	(chat-local-to-self "Imperial age army size set")
+	(disable-self)
+)
+
+(defrule
+    (current-age >= imperial-age)
+=>
+	;barracks
+    (set-goal gl-train-militia yes)
+	(set-goal gl-train-spearman no)
+	;archery-range
+	(set-goal gl-train-archers yes)
+	(set-goal gl-train-skirmisher no)
+	(set-goal gl-train-cavalry-archer no)
+	;stable
+	(set-goal gl-train-scout-cavalry no)
+	(set-goal gl-train-knight no)
+	;monastery
+	(set-goal gl-train-monk yes)
+	;siege-workshop
+	(set-goal gl-train-battering-ram no)
+	(set-goal gl-train-scorpion no)
+	(set-goal gl-train-mangonel yes)
+	(set-goal gl-train-bombard-cannon no)
+    (disable-self)
+)
+
+; ATTACKING ============================================
+
+
+
+; BUILDING ===========================================
+
+(defrule
+	(true)
+=>
+	(up-assign-builders c: town-center-foundation c: 4)
+	(up-assign-builders c: castle c: 4)
+	(disable-self)
+)
+
+(load "MyLib\timers")

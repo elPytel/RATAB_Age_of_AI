@@ -124,7 +124,6 @@ Pro návrh složitějších pravidel lze jednotlivé výrazy spojovat pomocí bo
 - `AND` "a" také bere dvě podmínky a jeho jediným účelem je být použita v ORu.
 - `NOT` "nikoli" bere pouze jednu podmínku a je pravdivá, pokud je podmínka nepravdivá.
 
-**Pozor**! OR smí mít jen dva prvky! Pokud chcete použít více než dvě podmínky, musíte použít další vnořený OR.
 
 ``` LISP
 (defrule
@@ -154,6 +153,23 @@ Pro návrh složitějších pravidel lze jednotlivé výrazy spojovat pomocí bo
     )
 =>
     (action)
+)
+```
+
+**Pozor**! OR smí mít jen dva prvky! Pokud chcete použít více než dvě podmínky, musíte použít další vnořený OR.
+
+Ukázka zřetězení `OR`:
+    
+``` LISP
+(defrule
+    (goal upgrade-economy yes)
+(or (food-amount <= 600)
+(or (wood-amount <= 600)
+(or (gold-amount <= 100)
+    (stone-amount <= 100))))
+=>
+    (set-goal upgrade-economy no)
+    (chat-local-to-self "Upgrades disabled")
 )
 ```
 
@@ -526,7 +542,22 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 - [basic.ai](./src/basic.ai)
 - [basic.per](./src/basic.per)
 
-### Další obecné vzorové kódy
+Template pro již složitější vzorový script:
+- [template.ai](./src/template.ai)
+- [template.per](./src/template.per)
+
+Ten využívá předpřipravené knihovny osobností uvedených v adresáři [MyLib](./src/MyLib). Jejiž použití je popsáno dále.
+
+### Nahrání dílčích personalit
+Můžete načíst soubory "osobnosti" (prostě knihoven, vašich dílčích kusů kódu) z dalších souborů. 
+``` LISP
+(load "MyLib\dark-age")
+```
+(Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *MyLib*)
+
+**Pozor!** To však nelze použít v pravidlech!
+
+### Další obecné vzorové kódy osobností
 
 - Seznam konstant: [constants.per](./src/MyLib/constants.per).
 - Stavění budov: [construction.per](./src/MyLib/construction.per).
@@ -536,6 +567,11 @@ Zde je jednoduchý příklad AI scriptu, na kterém můžte stavět:
 - Generické časovače: [timers.per](./src/MyLib/timers.per).
 
 **Pozor!** Pro správné fungování striptu *timers.per* je potřeba jej vložit až na konec souboru *mojeAI.per*.
+
+#### Personality *constants.per*
+Obsahuje definici konstant, které jsou použity v ostatních scriptech. Konstanty jsou definovány pomocí `defconst` a jejich hodnoty se nemění. Konstanty jsou použity pro lepší čitelnost kódu. Začínají na čísle $400$ a končí koncem intrvalu pro definici herních cílů.
+
+**Pozor!** Své cíle definujte jen na omezeném intervalu $0 - 400$.
 
 #### Vzor pro použití *construction.per*:
 ``` LISP
@@ -648,15 +684,6 @@ Vylepšování se provede při nejbližší příležitosti, kdy bude AI mít do
 )
 ```
 Tato konfigurace nastaví v jaké době a jakou armádu bude AI vytvářet. V tomto případě bude AI vytvářet armádu až po dosažení imperial age a bude se snažit mít 100 jednotek od povolených typů.
-
-### Nahrání dílčích personalit
-Můžete načíst soubory "osobnosti" (prostě knihoven, vašich dílčích kusů kódu) z dalších souborů. 
-``` LISP
-(load "MyLib\dark-age")
-```
-(Toto předpokládá, že existuje soubor s názvem *dark-age.per* ve složce s názvem *MyLib*)
-
-**Pozor!** To však nelze použít v pravidlech!
 
 ## Vy toho chcete víc?
 

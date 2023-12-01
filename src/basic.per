@@ -1,7 +1,7 @@
-;LIBRARIES ========================================
+; LIBRARIES ========================================
 ;(load "MyLib\attack_enemy")
 
-;ATTACKING ========================================
+; ATTACKING ========================================
 
 (defrule
     (military-population >= 10) ;when we have 10 military, attack!
@@ -9,7 +9,7 @@
     (attack-now)
 )
 
-;STRATEGIC NUMBERS ========================================
+; STRATEGIC NUMBERS ========================================
 
 (defrule ;initial numbers
     (true)
@@ -41,7 +41,7 @@
     (disable-self)
 )
 
-;RESEARCH ========================================
+; RESEARCH ========================================
 ;Notice that this section is above units, this is so we can research stuff before we queue stuff.
 
 (defrule
@@ -63,7 +63,7 @@
     (research feudal-age)
 )
 
-;UNITS ========================================
+; UNITS ========================================
 
 (defrule
     (civilian-population < 130) ;if we have less than 130 villagers, train a villager.
@@ -78,7 +78,7 @@
     (train archer-line)
 )
 
-;BUILDINGS ========================================
+; BUILDINGS ========================================
 
 (defrule ;we need houses!
     (housing-headroom < 5) ;if we are nearly housed

@@ -5,6 +5,8 @@
     (enable-timer tm-10s 10)
     (enable-timer tm-30s 30)
     (enable-timer tm-60s 60)
+    (enable-timer tm-5m 300)
+    (enable-timer tm-micro micro-interval)
     (disable-self)
 )
 
@@ -30,4 +32,18 @@
     (timer-triggered tm-60s)
 =>
     (enable-timer tm-60s 60)
+)
+
+; 5 minut
+(defrule
+    (timer-triggered tm-5m)
+=>
+    (enable-timer tm-5m 300)
+)
+
+; micromanagment timer
+(defrule
+    (timer-triggered tm-micro)
+=>
+    (enable-timer tm-micro micro-interval)
 )
