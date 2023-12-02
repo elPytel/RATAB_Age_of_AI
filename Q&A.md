@@ -10,7 +10,7 @@ Lze přenastavit v nastavení hry:
 
 ### Steam
 Zrychlení x4 a x8 je dostupné v nastavení hry [dle](https://www.youtube.com/watch?v=jGaaQ6FmxiU):
-- Steam -> Library -> Right click on game -> Properties -> Set Launch Options -> `DEBUGSPEED`
+- Steam -> Library -> Right click on game -> Properties -> Set Launch Options -> `DEBUGSPEEDS`
 
 ## Užitečne kusy kódu
 

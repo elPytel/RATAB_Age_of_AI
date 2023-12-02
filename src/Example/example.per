@@ -1,0 +1,86 @@
+
+(defconst drevo 100)
+(defconst jidlo 101)
+(defconst zlato 102)
+
+(defconst prev-drevo 103)
+(defconst prev-jidlo 104)
+(defconst prev-zlato 105)
+
+(defconst gl-drevo 106)
+(defconst gl-jidlo 107)
+(defconst gl-zlato 108)
+
+(defrule 
+    (true)
+=>  
+    (chat-to-all "test AI bezi...")
+    (set-strategic-number sn-wood-gatherer-percentage 34)
+    (set-strategic-number sn-food-gatherer-percentage 34)
+    (set-strategic-number sn-gold-gatherer-percentage 34)
+    (set-goal gl-drevo 50)
+    (set-goal gl-jidlo 50)
+    (set-goal gl-zlato 50)
+    (disable-self)
+)
+
+(defrule
+    (true)
+=>
+    (up-get-player-fact my-player-number wood-amount 0 drevo)
+    (up-get-player-fact my-player-number food-amount 0 jidlo)
+    (up-get-player-fact my-player-number gold-amount 0 zlato)
+)
+
+(defrule
+    (up-compare-goal drevo g:!= prev-drevo)
+=> 
+    (up-chat-data-to-all "Aktualizace dreva: %d" g: drevo)
+    (up-get-player-fact my-player-number wood-amount 0 prev-drevo)
+)
+
+(defrule
+    (up-compare-goal jidlo g:!= prev-jidlo)
+=> 
+    (up-chat-data-to-all "Aktualizace jidla: %d" g: jidlo)
+    (up-get-player-fact my-player-number food-amount 0 prev-jidlo)
+)
+
+(defrule
+    (up-compare-goal zlato g:!= prev-zlato)
+=> 
+    (up-chat-data-to-all "Aktualizace zlata: %d" g: zlato)
+    (up-get-player-fact my-player-number gold-amount 0 prev-zlato)
+)
+
+(defrule 
+    (up-compare-goal drevo g:>= gl-drevo)
+=>  
+    (chat-to-all "Dreva je dostatek")
+    (disable-self)
+)
+
+(defrule 
+    (up-compare-goal jidlo g:>= gl-jidlo)
+=>  
+    (chat-to-all "Jidla je dostatek")
+    (disable-self)
+)
+
+(defrule 
+    (up-compare-goal zlato g:>= gl-zlato)
+=>  
+    (chat-to-all "Zlata je dostatek")
+    (disable-self)
+)
+
+(defrule
+    (can-build house)
+    (up-compare-goal drevo g:>= gl-drevo)
+    (up-compare-goal jidlo g:>= gl-jidlo)
+    (up-compare-goal zlato g:>= gl-zlato)
+=>
+    (build house)
+    (chat-to-all "Stavim domecek")
+    (disable-self)
+)
